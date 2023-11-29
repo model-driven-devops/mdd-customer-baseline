@@ -1,0 +1,5 @@
+*.tfstate
+*.tfstate.*
+*.tflock
+*.lock.*
+.terragrunt-cache

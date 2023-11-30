@@ -1,5 +1,9 @@
 version: 0.2
 
+install:
+  commands:
+    - pip install yamllint
+    
 phases:
   pre_build:
     commands:

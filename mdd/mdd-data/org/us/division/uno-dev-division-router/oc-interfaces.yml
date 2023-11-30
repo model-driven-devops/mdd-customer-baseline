@@ -1,0 +1,24 @@
+---
+mdd_data:
+  mdd:openconfig:
+    openconfig-interfaces:interfaces:
+      openconfig-interfaces:interface:
+        - openconfig-interfaces:name: GigabitEthernet1
+          openconfig-interfaces:config:
+            openconfig-interfaces:name: GigabitEthernet1
+            openconfig-interfaces:type: ethernetCsmacd
+            openconfig-interfaces:enabled: true
+          openconfig-interfaces:subinterfaces:
+            openconfig-interfaces:subinterface:
+              - openconfig-interfaces:index: 0
+                openconfig-interfaces:config:
+                  openconfig-interfaces:index: 0
+                  openconfig-interfaces:enabled: true
+                openconfig-if-ip:ipv4:
+                  openconfig-if-ip:config:
+                    openconfig-if-ip:dhcp-client: true
+                    openconfig-if-ip-mdd-ext:nat:
+                      openconfig-if-ip-mdd-ext:nat-choice: outside
+          openconfig-if-ethernet:ethernet:
+            openconfig-if-ethernet:config:
+              openconfig-if-ethernet:auto-negotiate: true

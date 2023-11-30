@@ -1,0 +1,229 @@
+---
+mdd_data:
+  config:
+    tailf-ned-cisco-ios:tailfned:
+      police: cirmode
+    tailf-ned-cisco-ios:version: '17.9'
+    tailf-ned-cisco-ios:service:
+      conf: {}
+      timestamps: {}
+      call-home:
+        - null
+    tailf-ned-cisco-ios:login:
+      on-success: {}
+    tailf-ned-cisco-ios:platform:
+      console: virtual
+      punt-keepalive:
+        disable-kernel-core: true
+      qfp:
+        utilization:
+          monitor:
+            load: 80
+    tailf-ned-cisco-ios:aaa:
+      new-model:
+        - null
+      authentication:
+        login:
+          - name: default
+            local:
+              - null
+      authorization:
+        exec:
+          - name: default
+            local:
+              - null
+            none:
+              - null
+      session-id: common
+    tailf-ned-cisco-ios:call-home:
+      contact-email-addr: sch-smart-licensing@cisco.com
+      profile:
+        - name: CiscoTAC-1
+          active: true
+          reporting:
+            smart-licensing-data: true
+          destination:
+            transport-method:
+              http:
+                - null
+    tailf-ned-cisco-ios:iox: {}
+    tailf-ned-cisco-ios:ip:
+      tcp:
+        window-size: 8192
+      ssh:
+        rsa:
+          keypair-name: ssh-key
+        pubkey-chain:
+          username:
+            - name: ec2-user
+              key-hash:
+                - key-type: ssh-rsa
+                  key-name: 1A139C85949B0FCC56B308A2062710E0
+                  key-comment: ec2-user
+      scp:
+        server:
+          enable:
+            - null
+      forward-protocol:
+        nd:
+          - null
+      http: {}
+    tailf-ned-cisco-ios:ipv6:
+      unicast-routing:
+        - null
+    tailf-ned-cisco-ios:subscriber:
+      templating: true
+    tailf-ned-cisco-ios:multilink:
+      bundle-name: authenticated
+    tailf-ned-cisco-ios:username:
+      - name: VALUE_SPECIFIED_IN_NO_LOG_PARAMETER
+        privilege: 15
+        password:
+          type: '7'
+          secret: 104D000A0618
+      - name: ec2-user
+        privilege: 15
+    tailf-ned-cisco-ios:redundancy: {}
+    tailf-ned-cisco-ios:vtp:
+      version: 1
+      mode: server
+    tailf-ned-cisco-ios:crypto:
+      pki:
+        trustpoint:
+          - id: SLA-TrustPoint
+            enrollment:
+              pkcs12:
+                - null
+            revocation-check:
+              - crl
+          - id: TP-self-signed-2833371507
+            enrollment:
+              selfsigned:
+                - null
+            subject-name: cn=IOS-Self-Signed-Certificate-2833371507
+            revocation-check:
+              - none
+            rsakeypair:
+              key-label: TP-self-signed-2833371507
+        certificate:
+          chain:
+            - name: SLA-TrustPoint
+              certificate:
+                - serial: '01'
+                  cert-type: ca
+                  cert: "  30820321 30820209 A0030201 02020101 300D0609 2A864886 F70D0101\
+                    \ 0B050030 \r\n  32310E30 0C060355 040A1305 43697363 6F312030\
+                    \ 1E060355 04031317 43697363 \r\n  6F204C69 63656E73 696E6720\
+                    \ 526F6F74 20434130 1E170D31 33303533 30313934 \r\n  3834375A\
+                    \ 170D3338 30353330 31393438 34375A30 32310E30 0C060355 040A1305\
+                    \ \r\n  43697363 6F312030 1E060355 04031317 43697363 6F204C69\
+                    \ 63656E73 696E6720 \r\n  526F6F74 20434130 82012230 0D06092A\
+                    \ 864886F7 0D010101 05000382 010F0030 \r\n  82010A02 82010100\
+                    \ A6BCBD96 131E05F7 145EA72C 2CD686E6 17222EA1 F1EFF64D \r\n \
+                    \ CBB4C798 212AA147 C655D8D7 9471380D 8711441E 1AAF071A 9CAE6388\
+                    \ 8A38E520 \r\n  1C394D78 462EF239 C659F715 B98C0A59 5BBB5CBD\
+                    \ 0CFEBEA3 700A8BF7 D8F256EE \r\n  4AA4E80D DB6FD1C9 60B1FD18\
+                    \ FFC69C96 6FA68957 A2617DE7 104FDC5F EA2956AC \r\n  7390A3EB\
+                    \ 2B5436AD C847A2C5 DAB553EB 69A9A535 58E9F3E3 C0BD23CF 58BD7188\
+                    \ \r\n  68E69491 20F320E7 948E71D7 AE3BCC84 F10684C7 4BC8E00F\
+                    \ 539BA42B 42C68BB7 \r\n  C7479096 B4CB2D62 EA2F505D C7B062A4\
+                    \ 6811D95B E8250FC4 5D5D5FB8 8F27D191 \r\n  C55F0D76 61F9A4CD\
+                    \ 3D992327 A8BB03BD 4E6D7069 7CBADF8B DF5F4368 95135E44 \r\n \
+                    \ DFC7C6CF 04DD7FD1 02030100 01A34230 40300E06 03551D0F 0101FF04\
+                    \ 04030201 \r\n  06300F06 03551D13 0101FF04 05300301 01FF301D\
+                    \ 0603551D 0E041604 1449DC85 \r\n  4B3D31E5 1B3E6A17 606AF333\
+                    \ 3D3B4C73 E8300D06 092A8648 86F70D01 010B0500 \r\n  03820101\
+                    \ 00507F24 D3932A66 86025D9F E838AE5C 6D4DF6B0 49631C78 240DA905\
+                    \ \r\n  604EDCDE FF4FED2B 77FC460E CD636FDB DD44681E 3A5673AB\
+                    \ 9093D3B1 6C9E3D8B \r\n  D98987BF E40CBD9E 1AECA0C2 2189BB5C\
+                    \ 8FA85686 CD98B646 5575B146 8DFC66A8 \r\n  467A3DF4 4D565700\
+                    \ 6ADF0F0D CF835015 3C04FF7C 21E878AC 11BA9CD2 55A9232C \r\n \
+                    \ 7CA7B7E6 C1AF74F6 152E99B7 B1FCF9BB E973DE7F 5BDDEB86 C71E3B49\
+                    \ 1765308B \r\n  5FB0DA06 B92AFE7F 494E8A9E 07B85737 F3A58BE1\
+                    \ 1A48A229 C37C1E69 39F08678 \r\n  80DDCD16 D6BACECA EEBC7CF9\
+                    \ 8428787B 35202CDC 60E4616A B623CDBD 230E3AFB \r\n  418616A9\
+                    \ 4093E049 4D10AB75 27E86F73 932E35B5 8862FDAE 0275156F 719BB2F0\
+                    \ \r\n  D697DF7F 28\r\n"
+            - name: TP-self-signed-2833371507
+              certificate:
+                - serial: '01'
+                  cert-type: self-signed
+                  cert: "  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101\
+                    \ 05050030 \r\n  31312F30 2D060355 04031326 494F532D 53656C66\
+                    \ 2D536967 6E65642D 43657274 \r\n  69666963 6174652D 32383333\
+                    \ 33373135 3037301E 170D3233 31313239 31373338 \r\n  31305A17\
+                    \ 0D333331 31323831 37333831 305A3031 312F302D 06035504 03132649\
+                    \ \r\n  4F532D53 656C662D 5369676E 65642D43 65727469 66696361\
+                    \ 74652D32 38333333 \r\n  37313530 37308201 22300D06 092A8648\
+                    \ 86F70D01 01010500 0382010F 00308201 \r\n  0A028201 0100B68A\
+                    \ 874EB83F B70D1B90 D8BAECCC B1149A88 A41F67F8 AC84156F \r\n \
+                    \ CB44D523 2371A0D6 FFE19306 C9DE6CF4 D6636C90 E04928C3 691BF263\
+                    \ 30DE5B1C \r\n  8769DE8C E02978B5 51A79490 F34BE2D2 EBEF538B\
+                    \ 8367AF2A CB11E07F 1C12D669 \r\n  DDCFDD4A 27B83202 79953ED9\
+                    \ AEA8F97F B39C9B8D D663EB83 374F46F8 5CE354D7 \r\n  620ACFC3\
+                    \ 8F79025E E39CA9FB 932CE80B 1D2B9028 58045508 77D58A33 FA821457\
+                    \ \r\n  F4C26CCA 0DE79E75 2C01BADA E4E67267 453F4FD7 EEAB5454\
+                    \ 99F63239 436D4A88 \r\n  C042FA09 88AEEA37 977441A0 795A3FB7\
+                    \ C4678E57 7F03C035 3E671293 4D269059 \r\n  6AD3FC68 1E1346B9\
+                    \ A2F9D591 1D563677 4EDC9C2A 18A34C7E AFA9E979 E897A49F \r\n \
+                    \ 0102607F F1370203 010001A3 53305130 0F060355 1D130101 FF040530\
+                    \ 030101FF \r\n  301F0603 551D2304 18301680 1462F1D6 3AFE1BB9\
+                    \ E2C04768 CD31DCCB 19483127 \r\n  7C301D06 03551D0E 04160414\
+                    \ 62F1D63A FE1BB9E2 C04768CD 31DCCB19 4831277C \r\n  300D0609\
+                    \ 2A864886 F70D0101 05050003 82010100 30A4036E 55651E75 CDAAF261\
+                    \ \r\n  65B6D70E EE1493E9 25BE8888 CDE59D08 7BE81DEE 926BB0C9\
+                    \ CA357F04 0A09954C \r\n  B31C1E5A F34ABB41 B9A1D3BA DBE35C71\
+                    \ C4D46D32 F83A6729 1192583C A29724CE \r\n  23D62914 A782103C\
+                    \ B16A41E3 C76E0119 F2079721 F10A6713 C288369E 13B57A2B \r\n \
+                    \ 89BDA213 D5CD0D59 78CCF155 10E73424 F8E14D26 1B6BF627 E6861BA8\
+                    \ CCBB6EA7 \r\n  636C4E1A BDE693CC D6A5255C 0FF9135E 4C5429A7\
+                    \ 32F01807 DBDE8A89 93387E99 \r\n  CCBFF6C2 C2B1FB0C F9DC91FA\
+                    \ 05FBDF3D 66160708 A901C337 C323A8BF 407E334F \r\n  04F8B1D0\
+                    \ E6CA32A8 380A2A62 B78025E4 ABD4BD53 D5A7DB03 A79D63A8 2766F8CF\
+                    \ \r\n  8ED57CC9 A84CE5E6 6C4EC298 A6BE99D4 00F30531\r\n"
+    tailf-ned-cisco-ios:interface:
+      GigabitEthernet:
+        - name: '1'
+          negotiation: {}
+          ip:
+            address:
+              dhcp: {}
+            nat: {}
+          ipv6:
+            address:
+              dhcp: {}
+            enable:
+              - null
+            nd:
+              autoconfig:
+                default-route:
+                  - null
+    tailf-ned-cisco-ios:control-plane: {}
+    tailf-ned-cisco-ios:line:
+      console:
+        - first: '0'
+          stopbits: '1'
+      aux:
+        - first: '0'
+      vty:
+        - first: 0
+          last: 4
+          transport:
+            input:
+              - ssh
+        - first: 5
+          last: 20
+          transport:
+            input:
+              - ssh
+    tailf-ned-cisco-ios:logging:
+      buffered: {}
+      console: {}
+      monitor: {}
+    tailf-ned-cisco-ios:diagnostic:
+      bootup:
+        level: minimal
+    tailf-ned-cisco-ios:memory:
+      free:
+        low-watermark:
+          processor: 63976

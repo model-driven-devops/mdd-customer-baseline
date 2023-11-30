@@ -1,0 +1,69 @@
+all:
+  vars:
+    ansible_user: "{{ lookup('env', 'NSO_DEVICES_USERNAME') | default('admin', true) }}"
+    ansible_password: "{{ lookup('env', 'NSO_DEVICES_PASSWORD') | default('admin', true) }}"
+    ansible_network_os: ios
+    netconf_template_os: ios
+    sites:
+      - division
+      - brigade
+      - battalion
+      - company
+    regions:
+      - org
+      - us
+  children:
+    network:
+      children:
+        routers:
+          children:
+            division_routers:
+              hosts:
+                uno-dev-division-router:
+            brigade_routers:
+              hosts:
+                uno-dev-brigade-router:
+            battalion_routers:
+              hosts:
+                uno-dev-uk-battalion-router:
+                uno-dev-us-battalion-router:
+            company_routers:
+              hosts:
+                uno-dev-uk-company-router:
+                uno-dev-us-company-router:
+    org:
+      children:
+        us:
+          children:
+            division:
+              hosts:
+                uno-dev-division-router:
+                  tags:
+                    - division
+                    - router
+            brigade:
+              hosts:
+                uno-dev-brigade-router:
+                  tags:
+                    - brigade
+                    - router
+            battalion:
+              hosts:
+                uno-dev-us-battalion-router:
+                  tags:
+                    - battalion
+                    - router
+                uno-dev-uk-battalion-router:
+                  tags:
+                    - battalion
+                    - router
+            company:
+              hosts:
+                uno-dev-us-company-router:
+                  tags:
+                    - company
+                    - router
+                uno-dev-uk-company-router:
+                  tags:
+                    - company
+                    - router

@@ -1,0 +1,32 @@
+all:
+  vars:
+    nso_default_ned: cisco-ios-cli-6.92
+    mdd_model_repos:
+      - name: nso-oc-services
+        model_list:
+          - mdd
+    nso_installer_file: https://uno-nso-install-files.s3.us-gov-west-1.amazonaws.com/nso-6.1.linux.x86_64.signed.bin
+    nso_ned_files:
+      - https://uno-nso-install-files.s3.us-gov-west-1.amazonaws.com/ncs-6.1-cisco-ios-6.92.7.signed.bin
+    nso_package_repos:
+      - name: mdd
+        repo: https://github.com/model-driven-devops/nso-oc-services.git
+        version: v2.71.0
+        service_list:
+          - mdd
+    nso_rest_url: http://ec2-15-205-56-189.us-gov-west-1.compute.amazonaws.com:8080
+    nso_username: ubuntu
+    nso_auth_groups:
+      default:
+        remote_name: ec2_user
+        remote_password: "{{ lookup('env', 'PROD_REMOTE_PASSWORD') | default('admin', true) }}"        
+  children:
+    nso:
+      vars:
+        ansible_user: "{{ lookup('env', 'NSO_USERNAME') | default('ubuntu', true) }}"
+        ansible_password: "{{ lookup('env', 'NSO_PASSWORD') | default('admin', true) }}"
+        ansible_python_interpreter: /usr/bin/python3
+      hosts:
+        nso1:
+          ansible_host: 15.205.56.189
+          ansible_ssh_private_key_file: ~/.ssh/leevanginkelunokey.pem

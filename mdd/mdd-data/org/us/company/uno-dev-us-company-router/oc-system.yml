@@ -1,0 +1,76 @@
+---
+mdd_data:
+  mdd:openconfig:
+    openconfig-system:system:
+      openconfig-system:clock:
+        openconfig-system:config:
+          openconfig-system:timezone-name: UTC 0 0
+      openconfig-system:config:
+        openconfig-system:hostname: ip-172-23-2-143
+      openconfig-system:logging:
+        openconfig-system:console:
+          openconfig-system:config:
+            openconfig-system-ext:enabled: true
+          openconfig-system:selectors:
+            openconfig-system:selector:
+              - openconfig-system:facility: SYSLOG
+                openconfig-system:severity: DEBUG
+                openconfig-system:config:
+                  openconfig-system:facility: SYSLOG
+                  openconfig-system:severity: DEBUG
+        openconfig-system-ext:terminal-monitor:
+          openconfig-system-ext:selectors:
+            openconfig-system-ext:selector:
+              - openconfig-system-ext:facility: SYSLOG
+                openconfig-system-ext:severity: DEBUG
+                openconfig-system-ext:config:
+                  openconfig-system-ext:facility: SYSLOG
+                  openconfig-system-ext:severity: DEBUG
+        openconfig-system-ext:buffered:
+          openconfig-system-ext:config:
+            - openconfig-system-ext:enabled: true
+              openconfig-system-ext:severity: DEBUG
+              openconfig-system-ext:buffer-size: '4096'
+      openconfig-system:ssh-server:
+        openconfig-system:config:
+          openconfig-system:protocol-version: V2
+      openconfig-system-ext:services:
+        openconfig-system-ext:http:
+          openconfig-system-ext:config:
+            openconfig-system-ext:http-enabled: true
+            openconfig-system-ext:https-enabled: true
+        openconfig-system-ext:config:
+          openconfig-system-ext:ip-domain-lookup: true
+          openconfig-system-ext:archive-logging: false
+          openconfig-system-ext:ip-bootp-server: false
+          openconfig-system-ext:ip-dns-server: false
+          openconfig-system-ext:ip-identd: false
+          openconfig-system-ext:ip-rcmd-rcp-enable: false
+          openconfig-system-ext:ip-rcmd-rsh-enable: false
+          openconfig-system-ext:finger: false
+          openconfig-system-ext:service-config: false
+          openconfig-system-ext:service-tcp-small-servers: false
+          openconfig-system-ext:service-udp-small-servers: false
+          openconfig-system-ext:service-pad: false
+          openconfig-system-ext:service-password-encryption: true
+          openconfig-system-ext:ip-gratuitous-arps: true
+        openconfig-system-ext:login-security-policy:
+          openconfig-system-ext:config:
+            openconfig-system-ext:on-success: true
+            openconfig-system-ext:on-failure: false
+        openconfig-system-ext:boot-network:
+          openconfig-system-ext:config:
+            openconfig-system-ext:bootnetwork-enabled: DISABLED
+      openconfig-system-ext:timestamps:
+        openconfig-system-ext:logging:
+          openconfig-system-ext:config:
+            openconfig-system-ext:enabled: true
+            openconfig-system-ext:datetime: true
+            openconfig-system-ext:uptime: false
+            openconfig-system-ext:localtime: false
+        openconfig-system-ext:debugging:
+          openconfig-system-ext:config:
+            openconfig-system-ext:enabled: true
+            openconfig-system-ext:datetime: true
+            openconfig-system-ext:uptime: false
+            openconfig-system-ext:localtime: false

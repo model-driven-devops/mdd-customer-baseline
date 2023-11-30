@@ -1,13 +1,10 @@
 version: 0.2
 
 phases:
-  # pre_build:
-  #   commands:
-  #     - yamllint ./mdd-data
-
   build:
     commands:
       - cd mdd
+      - yamllint mdd-data
       # Save NSO rollback
       - ansible-playbook -i inventory_prod ciscops.mdd.nso_save_rollback;
       # Run data validation
@@ -17,8 +14,4 @@ phases:
     commands:
       # Load-rollback
       - ansible-playbook -i inventory_test ciscops.mdd.nso_load_rollback;
-
-artifacts:
-  files:
-    - rollback.yaml
 

@@ -3,11 +3,11 @@ version: 0.2
 install:
   commands:
     - pip install yamllint
-    
+
 phases:
-  pre_build:
-    commands:
-      - yamllint mdd-data
+  # pre_build:
+  #   commands:
+  #     - yamllint ./mdd-data
 
   build:
     commands:

@@ -1,9 +1,5 @@
 version: 0.2
 
-install:
-  commands:
-    - pip install yamllint
-
 phases:
   # pre_build:
   #   commands:
@@ -11,6 +7,7 @@ phases:
 
   build:
     commands:
+      - cd mdd
       # Save NSO rollback
       - ansible-playbook -i inventory_prod ciscops.mdd.nso_save_rollback;
       # Run data validation

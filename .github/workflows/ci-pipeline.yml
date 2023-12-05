@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  test:
+  rollback:
     runs-on: self-hosted
     environment: army-uno
     concurrency: army-uno
@@ -32,3 +32,18 @@ jobs:
         with:
           name: rollback-file
           path: mdd/rollback.yml
+  
+  validate:
+    runs-on: self-hosted
+    environment: army-uno
+    concurrency: army-uno
+    container:
+      image: ghcr.io/model-driven-devops/mdd:latest
+    steps:
+      - name: Checkout Inventory
+        uses: actions/checkout@v2
+
+      - name: Data Validation
+        run:  |
+          cd mdd
+          ansible-playbook ciscops.mdd.validate

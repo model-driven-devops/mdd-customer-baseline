@@ -3,6 +3,6 @@ mdd_tags:
   - all
 mdd_schemas:
   - name: domain
-    file: 'local/domain.schema.yml.j2' 
+    file: 'local/domain.schema.yml.j2'
     validate_vars:
       domain_name: mdd.cisco.com

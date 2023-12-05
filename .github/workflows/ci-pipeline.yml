@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - 'mdd/mdd-data/**.yml'
-      - 'mdd/mdd-data/**.yaml'
+      - 'mdd-data/**.yml'
+      - 'mdd-data/**.yaml'
 
 
 jobs:
@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Checkout Inventory
         uses: actions/checkout@v2
-      - name: Change to the Correct Directory
+      - name: Change directory
         run: cd mdd
       - name: Run YAMLLINT
         run: yamllint mdd-data

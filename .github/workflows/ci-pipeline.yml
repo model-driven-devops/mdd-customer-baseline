@@ -37,6 +37,7 @@ jobs:
     runs-on: self-hosted
     environment: army-uno
     concurrency: army-uno
+    needs: rollback
     container:
       image: ghcr.io/model-driven-devops/mdd:latest
     steps:

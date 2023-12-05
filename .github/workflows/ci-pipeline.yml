@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+env:
+  NSO_URL: http://ip-172-22-0-225.us-gov-west-1.compute.internal:8080
+
 jobs:
   test:
     runs-on: self-hosted

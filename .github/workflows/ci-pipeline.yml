@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - 'mdd-data/**.yml'
-      - 'mdd-data/**.yaml'
+      - './mdd/mdd-data/**.yml'
+      - './mdd/mdd-data/**.yaml'
 
 
 jobs:

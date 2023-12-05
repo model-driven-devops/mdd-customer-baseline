@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'mdd-data/**.yml'
+      - './mdd/mdd-data/**.yml'
       - 'mdd-data/**.yaml'
       - 'requirements.txt'
       - 'requirements.yml'
@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout Inventory
         uses: actions/checkout@v2
+      - name: Change to the Correct Directory
+        run: cd mdd
       - name: Run YAMLLINT
         run: yamllint mdd-data
       - name: Save Rollback

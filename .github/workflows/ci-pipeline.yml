@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: rollback-file
-          path: mdd/rollback.yml
+          path: mdd/rollback.yaml
   
   validate:
     runs-on: self-hosted

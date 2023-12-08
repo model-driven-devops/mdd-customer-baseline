@@ -14,7 +14,7 @@ all:
         version: v2.80.0
         service_list:
           - mdd
-    nso_rest_url: http://ec2-15-205-56-189.us-gov-west-1.compute.amazonaws.com:8080
+    nso_rest_url: http://ip-172-22-0-225.us-gov-west-1.compute.internal:8080
     nso_username: ubuntu
     nso_auth_groups:
       default:

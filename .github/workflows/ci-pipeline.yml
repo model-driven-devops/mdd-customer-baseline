@@ -48,3 +48,67 @@ jobs:
         run:  |
           cd mdd
           ansible-playbook ciscops.mdd.validate
+      
+      - name: NSO dry run
+        run:  |
+          cd mdd
+          ansible-playbook ciscops.mdd.update -e dry_run=yes
+  
+  update:
+    runs-on: self-hosted
+    environment: army-uno
+    concurrency: army-uno
+    needs: validate
+    container:
+        image: ghcr.io/model-driven-devops/mdd:latest
+    steps:
+      - name: Checkout Inventory
+        uses: actions/checkout@v2
+  
+      - name: NSO update
+        run:  |
+          cd mdd
+          ansible-playbook ciscops.mdd.update -e dry_run=no
+
+  check:
+    runs-on: self-hosted
+    environment: army-uno
+    concurrency: army-uno
+    needs: update
+    container:
+        image: ghcr.io/model-driven-devops/mdd:latest
+    steps:
+      - name: Checkout Inventory
+        uses: actions/checkout@v2
+      
+      - name: Pause for network converge
+        run: sleep 10
+
+      - name: Stateful check
+        run:  |
+          cd mdd
+          ansible-playbook ciscops.mdd.check
+  
+  load-rollback:
+    runs-on: self-hosted
+    needs: [update,check]
+    if: ${{ always() }}
+    environment: army-uno
+    concurrency: army-uno
+    container:
+      image: ghcr.io/model-driven-devops/mdd:latest
+
+    steps:
+      - name: Checkout Inventory
+        uses: actions/checkout@v2
+
+      - name: Download Rollback File
+        uses: actions/download-artifact@v2
+        with:
+          name: rollback-file
+          path: mdd
+
+      - name: Load Rollback
+        run: |
+          cd mdd
+          ansible-playbook ciscops.mdd.nso_load_rollback

@@ -1,18 +1,14 @@
-plugin: aws_ec2
+# plugin: aws_ec2
 
-regions:
-  - us-gov-west-1
+# regions:
+#   - us-gov-west-1
 
-filters:
-  tag:Name: uno-dev-*  # Adjust the filter to match your naming pattern
+# filters:
+#   tag:Name: uno-dev-*  # Adjust the filter to match your naming pattern
 
-# Create groups based on tags or other attributes
-# keyed_groups:
-#   - key: tags['Name']
-#     prefix: ''
 
-hostnames:
-  - tag:Name
-compose:
-  ansible_host: private_ip_address
+# hostnames:
+#   - tag:Name
+# compose:
+#   ansible_host: private_ip_address
 

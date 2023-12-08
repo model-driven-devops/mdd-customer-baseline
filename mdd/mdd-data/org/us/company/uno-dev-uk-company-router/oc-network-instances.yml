@@ -25,7 +25,7 @@ mdd_data:
                           - openconfig-network-instance:index: GigabitEthernet1
                             openconfig-network-instance:config:
                               openconfig-network-instance:index: GigabitEthernet1
-                              openconfig-network-instance:next-hop: 172.23.3.1
+                              openconfig-network-instance:next-hop: 172.23.5.1
                             openconfig-network-instance:interface-ref:
                               openconfig-network-instance:config:
                                 openconfig-network-instance:interface: GigabitEthernet1

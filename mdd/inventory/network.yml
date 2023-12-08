@@ -20,17 +20,23 @@ all:
             division_routers:
               hosts:
                 uno-dev-division-router:
+                  ansible_host: 172.23.0.4
             brigade_routers:
               hosts:
                 uno-dev-brigade-router:
+                  ansible_host: 172.23.1.4
             battalion_routers:
               hosts:
                 uno-dev-uk-battalion-router:
+                  ansible_host: 172.23.3.4
                 uno-dev-us-battalion-router:
+                  ansible_host: 172.23.2.4
             company_routers:
               hosts:
                 uno-dev-uk-company-router:
+                  ansible_host: 172.23.5.4
                 uno-dev-us-company-router:
+                  ansible_host: 172.23.4.4
     org:
       children:
         us:

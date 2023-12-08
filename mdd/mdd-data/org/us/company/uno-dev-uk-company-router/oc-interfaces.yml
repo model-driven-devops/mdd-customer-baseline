@@ -22,3 +22,17 @@ mdd_data:
           openconfig-if-ethernet:ethernet:
             openconfig-if-ethernet:config:
               openconfig-if-ethernet:auto-negotiate: true
+        - openconfig-interfaces:name: GigabitEthernet2
+          openconfig-interfaces:config:
+            openconfig-interfaces:name: GigabitEthernet2
+            openconfig-interfaces:type: ethernetCsmacd
+            openconfig-interfaces:enabled: false
+          openconfig-interfaces:subinterfaces:
+            openconfig-interfaces:subinterface:
+              - openconfig-interfaces:index: 0
+                openconfig-interfaces:config:
+                  openconfig-interfaces:index: 0
+                  openconfig-interfaces:enabled: false
+          openconfig-if-ethernet:ethernet:
+            openconfig-if-ethernet:config:
+              openconfig-if-ethernet:auto-negotiate: true

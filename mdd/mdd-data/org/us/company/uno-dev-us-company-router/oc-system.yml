@@ -6,7 +6,7 @@ mdd_data:
         openconfig-system:config:
           openconfig-system:timezone-name: UTC 0 0
       openconfig-system:config:
-        openconfig-system:hostname: ip-172-23-2-143
+        openconfig-system:hostname: ip-172-23-4-4
       openconfig-system:logging:
         openconfig-system:console:
           openconfig-system:config:

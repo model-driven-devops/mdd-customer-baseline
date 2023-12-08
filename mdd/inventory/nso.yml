@@ -11,10 +11,10 @@ all:
     nso_package_repos:
       - name: mdd
         repo: https://github.com/model-driven-devops/nso-oc-services.git
-        version: v2.71.0
+        version: v2.80.0
         service_list:
           - mdd
-    nso_rest_url: http://ip-172-22-0-225.us-gov-west-1.compute.internal:8080
+    nso_rest_url: http://ec2-15-205-56-189.us-gov-west-1.compute.amazonaws.com:8080
     nso_username: ubuntu
     nso_auth_groups:
       default:
@@ -28,5 +28,5 @@ all:
         ansible_python_interpreter: /usr/bin/python3
       hosts:
         nso1:
-          ansible_host: 15.205.56.189
-          ansible_ssh_private_key_file: ~/.ssh/leevanginkelunokey.pem
+          # ansible_host: 15.205.56.189
+          # ansible_ssh_private_key_file: ~/.ssh/leevanginkelunokey.pem

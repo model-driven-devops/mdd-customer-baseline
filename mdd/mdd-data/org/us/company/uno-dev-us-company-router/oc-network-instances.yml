@@ -10,6 +10,49 @@ mdd_data:
             openconfig-network-instance:enabled: 'true'
           openconfig-network-instance:protocols:
             openconfig-network-instance:protocol:
+              - openconfig-network-instance:identifier: OSPF
+                openconfig-network-instance:name: '10'
+                openconfig-network-instance:config:
+                  openconfig-network-instance:identifier: OSPF
+                  openconfig-network-instance:name: '10'
+                  openconfig-network-instance:enabled: true
+                openconfig-network-instance:ospfv2:
+                  openconfig-network-instance:global:
+                    config:
+                      openconfig-network-instance:log-adjacency-changes: false
+                      openconfig-network-instance:summary-route-cost-mode: RFC1583_COMPATIBLE
+                      openconfig-network-instance:hide-transit-only-networks: false
+                    openconfig-network-instance:graceful-restart:
+                      openconfig-network-instance:config:
+                        openconfig-network-instance:enabled: false
+                    openconfig-network-instance:config:
+                      openconfig-ospfv2-ext:capability-vrf-lite: false
+                      openconfig-ospfv2-ext:default-information-originate:
+                        openconfig-ospfv2-ext:config:
+                          openconfig-ospfv2-ext:enabled: false
+                    openconfig-network-instance:mpls:
+                      openconfig-network-instance:igp-ldp-sync:
+                        openconfig-network-instance:config:
+                          openconfig-network-instance:enabled: false
+                  openconfig-network-instance:areas:
+                    openconfig-network-instance:area:
+                      - openconfig-network-instance:identifier: 0
+                        openconfig-network-instance:config:
+                          openconfig-network-instance:identifier: 0
+                        openconfig-network-instance:mpls:
+                          openconfig-network-instance:config:
+                            openconfig-network-instance:traffic-engineering-enabled: false
+                        openconfig-network-instance:interfaces:
+                          openconfig-network-instance:interface:
+                            - openconfig-network-instance:id: Tunnel20
+                              openconfig-network-instance:config:
+                                openconfig-network-instance:id: Tunnel20
+                              openconfig-network-instance:enable-bfd:
+                                openconfig-network-instance:config:
+                                  openconfig-network-instance:enabled: false
+                              openconfig-ospfv2-ext:authentication:
+                                openconfig-ospfv2-ext:config:
+                                  - openconfig-ospfv2-ext:authentication-type: UNCONFIGURED
               - openconfig-network-instance:identifier: STATIC
                 openconfig-network-instance:name: DEFAULT
                 openconfig-network-instance:config:
@@ -25,11 +68,17 @@ mdd_data:
                           - openconfig-network-instance:index: GigabitEthernet1
                             openconfig-network-instance:config:
                               openconfig-network-instance:index: GigabitEthernet1
-                              openconfig-network-instance:next-hop: 172.23.2.1
+                              openconfig-network-instance:next-hop: 172.23.4.1
                             openconfig-network-instance:interface-ref:
                               openconfig-network-instance:config:
                                 openconfig-network-instance:interface: GigabitEthernet1
                                 openconfig-network-instance:subinterface: 0
+          openconfig-network-instance:interfaces:
+            openconfig-network-instance:interface:
+              - openconfig-network-instance:id: Tunnel20
+                openconfig-network-instance:config:
+                  openconfig-network-instance:id: Tunnel20
+                  openconfig-network-instance:interface: Tunnel20
           openconfig-network-instance:vlans:
             openconfig-network-instance:vlan:
               - openconfig-network-instance:vlan-id: 1

@@ -96,15 +96,15 @@ mdd_data:
                 - null
             revocation-check:
               - crl
-          - id: TP-self-signed-3548714145
+          - id: TP-self-signed-2560648255
             enrollment:
               selfsigned:
                 - null
-            subject-name: cn=IOS-Self-Signed-Certificate-3548714145
+            subject-name: cn=IOS-Self-Signed-Certificate-2560648255
             revocation-check:
               - none
             rsakeypair:
-              key-label: TP-self-signed-3548714145
+              key-label: TP-self-signed-2560648255
         certificate:
           chain:
             - name: SLA-TrustPoint
@@ -144,44 +144,53 @@ mdd_data:
                     \ 8428787B 35202CDC 60E4616A B623CDBD 230E3AFB \r\n  418616A9\
                     \ 4093E049 4D10AB75 27E86F73 932E35B5 8862FDAE 0275156F 719BB2F0\
                     \ \r\n  D697DF7F 28\r\n"
-            - name: TP-self-signed-3548714145
+            - name: TP-self-signed-2560648255
               certificate:
                 - serial: '01'
                   cert-type: self-signed
                   cert: "  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101\
                     \ 05050030 \r\n  31312F30 2D060355 04031326 494F532D 53656C66\
-                    \ 2D536967 6E65642D 43657274 \r\n  69666963 6174652D 33353438\
-                    \ 37313431 3435301E 170D3233 31313239 31373338 \r\n  32315A17\
-                    \ 0D333331 31323831 37333832 315A3031 312F302D 06035504 03132649\
+                    \ 2D536967 6E65642D 43657274 \r\n  69666963 6174652D 32353630\
+                    \ 36343832 3535301E 170D3233 31323037 32323335 \r\n  32335A17\
+                    \ 0D333331 32303632 32333532 335A3031 312F302D 06035504 03132649\
                     \ \r\n  4F532D53 656C662D 5369676E 65642D43 65727469 66696361\
-                    \ 74652D33 35343837 \r\n  31343134 35308201 22300D06 092A8648\
-                    \ 86F70D01 01010500 0382010F 00308201 \r\n  0A028201 0100B148\
-                    \ 89EF2E66 72C38148 0C0D8A2F ED64ADDD 588C08D7 5B17E9A1 \r\n \
-                    \ 9F4A039F 1C63CA95 50BA313C 8BFD45EE E9B4F0AB 713B5155 FE5199EC\
-                    \ 60739CF9 \r\n  0231EE75 9896DA08 BF8C03AD D21CB3B4 B105B127\
-                    \ 356297B6 A235C327 10AC3D85 \r\n  CFD3C375 E5279FA8 8449F6CE\
-                    \ 996E5879 ED8F489B 70E4573A F0AFDFA9 DE69C745 \r\n  347ABB86\
-                    \ A87D62F3 754F51B2 61BF58E9 328774AF 551A0022 DACB398C 5D7C19BC\
-                    \ \r\n  1F16255F D6CCF640 8913A321 2CEA9DB6 61BB30BA E57F9401\
-                    \ DE5E9217 1C35FA33 \r\n  1ECF61BD AF784E28 720880FB EE13467B\
-                    \ 76F192E3 9E2B03E6 A2EB7CB2 371ECFD1 \r\n  8DF04DC7 27AE9AE5\
-                    \ D96B78AA 00F33ADE CA54CF9A 6B8EBDA1 CC343F4B 9A6E67DC \r\n \
-                    \ 12A0041A DA530203 010001A3 53305130 0F060355 1D130101 FF040530\
-                    \ 030101FF \r\n  301F0603 551D2304 18301680 14D44074 C21772F2\
-                    \ ACE8C3DB 03226D63 7B7A38A9 \r\n  D2301D06 03551D0E 04160414\
-                    \ D44074C2 1772F2AC E8C3DB03 226D637B 7A38A9D2 \r\n  300D0609\
-                    \ 2A864886 F70D0101 05050003 82010100 14F70705 72F65C85 2609546D\
-                    \ \r\n  E218CD75 36B4FF36 2920CD3F EC3A3CC9 1BC583C7 8C74C052\
-                    \ C4EF6150 8AADD066 \r\n  C2E1BAE1 1FA2B273 684A6602 12304C00\
-                    \ D90478D6 D9733F35 395917EA 15CD4947 \r\n  13937144 8F72C5FC\
-                    \ 1F9DC6A5 B44C0BAD A3433365 75F67519 18FB0756 C0638233 \r\n \
-                    \ D7869437 2154E085 1F4DEE46 70C8443B 5FFBFC55 77C0744E 33BF7AE6\
-                    \ 1781C211 \r\n  B5A836D1 872A06AA 638D309D 1D163E0D 9D8F33B8\
-                    \ ABC3CB17 49D00116 49F89A6A \r\n  57127457 150F6061 1BE24937\
-                    \ 462B7B5F E4B6D1B7 E5B9B6F3 32C412D9 8BAD75DF \r\n  F5FB6A17\
-                    \ D15A0997 D2FC94C4 20588D82 6B08C53C 5E57F8F5 46FCAC79 FAA0BD78\
-                    \ \r\n  3F9E8278 213519BA 7A4D44A1 AF071F00 7A12EF8E\r\n"
+                    \ 74652D32 35363036 \r\n  34383235 35308201 22300D06 092A8648\
+                    \ 86F70D01 01010500 0382010F 00308201 \r\n  0A028201 0100BA63\
+                    \ E1731D7F D9A1EDC7 5DC6FEC5 1D02A7C0 AFAB16F7 9C94F1FD \r\n \
+                    \ B28F1E44 0F32AF46 B5B9A3B3 CA721A84 C7EE012D BE1F3DE0 A2064E03\
+                    \ 8BF217C5 \r\n  20A13987 B4B7C00D B90D9BAB DBCDBCAF 2B399512\
+                    \ CAB761B5 90758F75 8479FF44 \r\n  15102E31 491B3ED0 8BCB6409\
+                    \ 6A009D6C 7A77E533 492B402B 44ADEE3A 7282BCDA \r\n  CB3A64BD\
+                    \ BA7A4319 12694549 44290D19 6C8D6590 846E685F AC4B0ADD 1820A5FC\
+                    \ \r\n  89DF1209 52B805D7 A8CAB232 CEF160A5 D8A184BE B1EEA97D\
+                    \ 076BE3EF FDD54DE7 \r\n  9927C411 F507096C 0F3A3507 0CD91126\
+                    \ 48794B3C 77FAF976 74DB3D96 46FE01BF \r\n  B0EC4149 88569A97\
+                    \ 3951DECB 54CEC8C8 AF41D0F1 07767DB0 CB95F5E9 D2EB0879 \r\n \
+                    \ C374DE21 CD470203 010001A3 53305130 0F060355 1D130101 FF040530\
+                    \ 030101FF \r\n  301F0603 551D2304 18301680 14728350 953AA589\
+                    \ D9D645BC D41072B4 312B899D \r\n  B3301D06 03551D0E 04160414\
+                    \ 72835095 3AA589D9 D645BCD4 1072B431 2B899DB3 \r\n  300D0609\
+                    \ 2A864886 F70D0101 05050003 82010100 60102B9E 35C1908E 22F723AB\
+                    \ \r\n  1D89F215 25637D95 0C349820 19BABC77 76F22776 81F15548\
+                    \ B96D954C 037EAECB \r\n  BAC35E7E 53B8245E 23C1BD64 41A1E230\
+                    \ 018A5192 6F429822 B94ACBB7 9BBA14C7 \r\n  8D7BE61C 18F2435F\
+                    \ 6D7AEC2D 1321AA4A 72F64023 690072F4 73B85728 7F7DE544 \r\n \
+                    \ EAD27F1E ED6DFD6F 6D085AD6 DC7676E9 437BC19C CD474DE4 334D0EF4\
+                    \ 05103407 \r\n  1570764B 1F6CC5FD DC13CA3E 52DC1E62 6B1B77CD\
+                    \ 7D8DF440 CF43026B 94E953D9 \r\n  FB7187A2 D726242E 8A10687F\
+                    \ FC2058A6 C541C966 6DEB24B6 4181F1F8 EE95E8D0 \r\n  9F9FF003\
+                    \ C2B34E78 9B3C32DC 22B0C196 7C8A40E1 79628125 7AB901FE E421DAB4\
+                    \ \r\n  EBFCB53E E95097CF A6C2933B A3707309 A6945B7F\r\n"
     tailf-ned-cisco-ios:interface:
+      Loopback:
+        - name: '1'
+          ip:
+            address: {}
+      Tunnel:
+        - name: 1
+          ip:
+            address: {}
+          tunnel: {}
       GigabitEthernet:
         - name: '1'
           negotiation: {}
@@ -198,6 +207,11 @@ mdd_data:
               autoconfig:
                 default-route:
                   - null
+        - name: '2'
+          negotiation: {}
+          ip:
+            no-address:
+              address: false
     tailf-ned-cisco-ios:control-plane: {}
     tailf-ned-cisco-ios:line:
       console:
@@ -223,6 +237,9 @@ mdd_data:
     tailf-ned-cisco-ios:diagnostic:
       bootup:
         level: minimal
+    tailf-ned-cisco-ios:router:
+      ospf:
+        - id: 10
     tailf-ned-cisco-ios:memory:
       free:
         low-watermark:

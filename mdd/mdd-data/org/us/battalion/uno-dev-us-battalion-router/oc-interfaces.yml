@@ -3,6 +3,42 @@ mdd_data:
   mdd:openconfig:
     openconfig-interfaces:interfaces:
       openconfig-interfaces:interface:
+        - openconfig-interfaces:name: Tunnel2
+          openconfig-interfaces:config:
+            openconfig-interfaces:name: Tunnel2
+            openconfig-interfaces:type: tunnel
+            openconfig-interfaces:enabled: true
+          openconfig-if-tunnel:tunnel:
+            openconfig-if-tunnel:config:
+              openconfig-if-tunnel:src: 172.23.2.4
+              openconfig-if-tunnel:dst: 172.23.1.4
+            openconfig-if-tunnel:ipv4:
+              openconfig-if-tunnel:addresses:
+                openconfig-if-tunnel:address:
+                  - openconfig-if-tunnel:ip: 10.100.0.6
+                    openconfig-if-tunnel:config:
+                      openconfig-if-tunnel:ip: 10.100.0.6
+                      openconfig-if-tunnel:prefix-length: 30
+              openconfig-if-tunnel:config:
+                openconfig-if-tunnel:dhcp-client: false
+        - openconfig-interfaces:name: Tunnel20
+          openconfig-interfaces:config:
+            openconfig-interfaces:name: Tunnel20
+            openconfig-interfaces:type: tunnel
+            openconfig-interfaces:enabled: true
+          openconfig-if-tunnel:tunnel:
+            openconfig-if-tunnel:config:
+              openconfig-if-tunnel:src: 172.23.2.4
+              openconfig-if-tunnel:dst: 172.23.4.4
+            openconfig-if-tunnel:ipv4:
+              openconfig-if-tunnel:addresses:
+                openconfig-if-tunnel:address:
+                  - openconfig-if-tunnel:ip: 10.100.0.13
+                    openconfig-if-tunnel:config:
+                      openconfig-if-tunnel:ip: 10.100.0.13
+                      openconfig-if-tunnel:prefix-length: 30
+              openconfig-if-tunnel:config:
+                openconfig-if-tunnel:dhcp-client: false
         - openconfig-interfaces:name: GigabitEthernet1
           openconfig-interfaces:config:
             openconfig-interfaces:name: GigabitEthernet1
@@ -19,6 +55,20 @@ mdd_data:
                     openconfig-if-ip:dhcp-client: true
                     openconfig-if-ip-mdd-ext:nat:
                       openconfig-if-ip-mdd-ext:nat-choice: outside
+          openconfig-if-ethernet:ethernet:
+            openconfig-if-ethernet:config:
+              openconfig-if-ethernet:auto-negotiate: true
+        - openconfig-interfaces:name: GigabitEthernet2
+          openconfig-interfaces:config:
+            openconfig-interfaces:name: GigabitEthernet2
+            openconfig-interfaces:type: ethernetCsmacd
+            openconfig-interfaces:enabled: false
+          openconfig-interfaces:subinterfaces:
+            openconfig-interfaces:subinterface:
+              - openconfig-interfaces:index: 0
+                openconfig-interfaces:config:
+                  openconfig-interfaces:index: 0
+                  openconfig-interfaces:enabled: false
           openconfig-if-ethernet:ethernet:
             openconfig-if-ethernet:config:
               openconfig-if-ethernet:auto-negotiate: true

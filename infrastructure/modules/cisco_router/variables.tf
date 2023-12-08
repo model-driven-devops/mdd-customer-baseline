@@ -25,6 +25,16 @@ variable "environment" {
   type        = string
 }
 
+variable "secondary_private_ip" {
+  description = "Static private IP for the secondary network interface"
+  type        = string
+}
+
+variable "primary_private_ip" {
+  description = "Static private IP for the primary network interface"
+  type        = string
+}
+
 
 variable "subnet_id" {
   description = "The subnet ID where the Cisco router will be deployed"

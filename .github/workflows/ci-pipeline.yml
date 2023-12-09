@@ -15,7 +15,7 @@ jobs:
       image: ghcr.io/model-driven-devops/mdd:latest
     steps:
       - name: Checkout Inventory
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Run YAMLLINT in mdd-data
         run: |
@@ -28,7 +28,7 @@ jobs:
           ansible-playbook ciscops.mdd.nso_save_rollback
 
       - name: Upload Rollback File as Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: rollback-file
           path: mdd/rollback.yaml
@@ -42,7 +42,7 @@ jobs:
       image: ghcr.io/model-driven-devops/mdd:latest
     steps:
       - name: Checkout Inventory
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Data Validation
         run:  |
@@ -63,7 +63,7 @@ jobs:
         image: ghcr.io/model-driven-devops/mdd:latest
     steps:
       - name: Checkout Inventory
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
   
       - name: NSO update
         run:  |
@@ -79,7 +79,7 @@ jobs:
         image: ghcr.io/model-driven-devops/mdd:latest
     steps:
       - name: Checkout Inventory
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       
       - name: Pause for network converge
         run: sleep 10
@@ -100,10 +100,10 @@ jobs:
 
     steps:
       - name: Checkout Inventory
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Download Rollback File
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: rollback-file
           path: mdd

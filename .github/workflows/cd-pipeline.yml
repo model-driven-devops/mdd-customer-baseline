@@ -1,0 +1,28 @@
+name: CD-pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  update:
+    runs-on: self-hosted
+    environment: army-uno
+    concurrency: army-uno
+    container:
+      image: ghcr.io/model-driven-devops/mdd:latest
+    steps:
+      - name: Checkout Inventory
+        uses: actions/checkout@v4
+
+      - name: NSO update
+        run:  |
+          cd mdd
+          ansible-playbook ciscops.mdd.update -e dry_run=no
+
+      - name: Stateful check
+        run:  |
+          cd mdd
+          ansible-playbook ciscops.mdd.check

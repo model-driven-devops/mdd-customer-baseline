@@ -1,0 +1,35 @@
+---
+mdd_data:
+  mdd:openconfig:
+    openconfig-system:system:
+      openconfig-system:logging:
+        openconfig-system:console:
+          openconfig-system:config:
+            openconfig-system-ext:enabled: false
+      openconfig-system-ext:timestamps:
+        openconfig-system-ext:logging:
+          openconfig-system-ext:config:
+            openconfig-system-ext:enabled: true
+            openconfig-system-ext:datetime: true
+            openconfig-system-ext:uptime: false
+            openconfig-system-ext:localtime: false
+        openconfig-system-ext:debugging:
+          openconfig-system-ext:config:
+            openconfig-system-ext:enabled: true
+            openconfig-system-ext:datetime: true
+            openconfig-system-ext:uptime: false
+            openconfig-system-ext:localtime: false
+      openconfig-system:config:
+        openconfig-system:domain-name: mdd.cisco.com
+        # openconfig-system:hostname: '{{ inventory_hostname }}'
+      openconfig-system:dns:
+        openconfig-system:servers:
+          openconfig-system:server:
+            - openconfig-system:address: 208.67.222.222
+              openconfig-system:config:
+                openconfig-system:address: 208.67.222.222
+                openconfig-system:port: 53  # always 53 for ios
+            - openconfig-system:address: 208.67.220.220
+              openconfig-system:config:
+                openconfig-system:address: 208.67.220.220
+                openconfig-system:port: 53  # always 53 for ios

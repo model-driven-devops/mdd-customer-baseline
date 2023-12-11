@@ -1,0 +1,50 @@
+type: object
+required:
+  - ping
+properties:
+  ping:
+    type: object
+    required:
+      - address
+      - data_bytes
+      - repeat
+      - result_per_line
+      - statistics
+      - timeout_secs
+    properties:
+      address:
+        type: string
+      data_bytes:
+        type: integer
+      repeat:
+        type: integer
+      result_per_line:
+        type: array
+        items:
+          type: string
+      statistics:
+        type: object
+        required:
+          - received
+          - round_trip
+          - send
+          - success_rate_percent
+        properties:
+          received:
+            type: integer
+          round_trip:
+            type: object
+            properties:
+              avg_ms:
+                type: integer
+              max_ms:
+                type: integer
+              min_ms:
+                type: integer
+          send:
+            type: integer
+          success_rate_percent:
+            type: number
+            const: 100.0
+      timeout_secs:
+        type: integer

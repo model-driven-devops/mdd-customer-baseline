@@ -1,0 +1,9 @@
+---
+mdd_tags:
+  - all
+mdd_checks:
+## Checks for 100% ping target
+  - name: Check ping
+    command: 'ping 8.8.8.8'
+    schema: 'pyats/ping-test.yml'
+    method: cli_parse

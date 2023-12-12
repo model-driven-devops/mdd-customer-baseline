@@ -47,29 +47,35 @@ all:
                   tags:
                     - division
                     - router
+                    - stig
             brigade:
               hosts:
                 uno-dev-brigade-router:
                   tags:
                     - brigade
                     - router
+                    - stig
             battalion:
               hosts:
                 uno-dev-us-battalion-router:
                   tags:
                     - battalion
                     - router
+                    - stig
                 uno-dev-uk-battalion-router:
                   tags:
                     - battalion
                     - router
+                    - stig
             company:
               hosts:
                 uno-dev-us-company-router:
                   tags:
                     - company
                     - router
+                    - stig
                 uno-dev-uk-company-router:
                   tags:
                     - company
                     - router
+                    - stig

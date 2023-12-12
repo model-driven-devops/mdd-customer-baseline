@@ -21,15 +21,35 @@ mdd_data:
             openconfig-system-ext:localtime: false
       openconfig-system:config:
         openconfig-system:domain-name: mdd.cisco.com
-        # openconfig-system:hostname: '{{ inventory_hostname }}'
+        openconfig-system-ext:console-exec-timeout-seconds: 600
       openconfig-system:dns:
         openconfig-system:servers:
           openconfig-system:server:
             - openconfig-system:address: 208.67.222.222
               openconfig-system:config:
                 openconfig-system:address: 208.67.222.222
-                openconfig-system:port: 53  # always 53 for ios
+                openconfig-system:port: 53
             - openconfig-system:address: 208.67.220.220
               openconfig-system:config:
                 openconfig-system:address: 208.67.220.220
-                openconfig-system:port: 53  # always 53 for ios
+                openconfig-system:port: 53
+      openconfig-system-ext:services:
+        openconfig-system-ext:http:
+          openconfig-system-ext:config:
+            openconfig-system-ext:http-enabled: true
+            openconfig-system-ext:https-enabled: true
+        openconfig-system-ext:config:
+          openconfig-system-ext:ip-domain-lookup: true
+          openconfig-system-ext:archive-logging: true
+          openconfig-system-ext:ip-bootp-server: false
+          openconfig-system-ext:ip-dns-server: false
+          openconfig-system-ext:ip-identd: false
+          openconfig-system-ext:ip-rcmd-rcp-enable: false
+          openconfig-system-ext:ip-rcmd-rsh-enable: false
+          openconfig-system-ext:finger: false
+          openconfig-system-ext:service-config: false
+          openconfig-system-ext:service-tcp-small-servers: false
+          openconfig-system-ext:service-udp-small-servers: false
+          openconfig-system-ext:service-pad: false
+          openconfig-system-ext:service-password-encryption: true
+          openconfig-system-ext:ip-gratuitous-arps: true

@@ -35,25 +35,6 @@ mdd_data:
         openconfig-system:config:
           openconfig-system:protocol-version: V2
       openconfig-system-ext:services:
-        openconfig-system-ext:http:
-          openconfig-system-ext:config:
-            openconfig-system-ext:http-enabled: true
-            openconfig-system-ext:https-enabled: true
-        openconfig-system-ext:config:
-          openconfig-system-ext:ip-domain-lookup: true
-          openconfig-system-ext:archive-logging: false
-          openconfig-system-ext:ip-bootp-server: false
-          openconfig-system-ext:ip-dns-server: false
-          openconfig-system-ext:ip-identd: false
-          openconfig-system-ext:ip-rcmd-rcp-enable: false
-          openconfig-system-ext:ip-rcmd-rsh-enable: false
-          openconfig-system-ext:finger: false
-          openconfig-system-ext:service-config: false
-          openconfig-system-ext:service-tcp-small-servers: false
-          openconfig-system-ext:service-udp-small-servers: false
-          openconfig-system-ext:service-pad: false
-          openconfig-system-ext:service-password-encryption: true
-          openconfig-system-ext:ip-gratuitous-arps: true
         openconfig-system-ext:login-security-policy:
           openconfig-system-ext:config:
             openconfig-system-ext:on-success: true

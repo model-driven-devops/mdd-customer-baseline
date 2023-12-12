@@ -1,0 +1,25 @@
+type: object
+required:
+  - interface
+properties:
+  interface:
+    type: object
+    required:
+      - GigabitEthernet1
+    properties:
+      GigabitEthernet1:
+        type: object
+        required:
+          - interface_is_ok
+          - protocol
+          - status
+        properties:
+          interface_is_ok:
+            type: string
+            const: 'YES'
+          protocol:
+            type: string
+            const: up
+          status:
+            type: string
+            const: up

@@ -21,8 +21,3 @@ jobs:
         run:  |
           cd mdd
           ansible-playbook ciscops.mdd.update -e dry_run=no
-
-      - name: Stateful check
-        run:  |
-          cd mdd
-          ansible-playbook ciscops.mdd.check

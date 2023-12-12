@@ -80,9 +80,6 @@ jobs:
     steps:
       - name: Checkout Inventory
         uses: actions/checkout@v4
-      
-      # - name: Pause for network converge
-      #   run: sleep 10
 
       - name: Stateful check
         run:  |

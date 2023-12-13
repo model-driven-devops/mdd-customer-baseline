@@ -1,4 +1,4 @@
-name: device onboard
+name: CI-device-onboard
 
 on:
   workflow_dispatch:

@@ -21,9 +21,9 @@ mdd_data:
                       openconfig-if-tunnel:prefix-length: 30
               openconfig-if-tunnel:config:
                 openconfig-if-tunnel:dhcp-client: false
-        - openconfig-interfaces:name: Tunnel20
+        - openconfig-interfaces:name: Tunnel30
           openconfig-interfaces:config:
-            openconfig-interfaces:name: Tunnel20
+            openconfig-interfaces:name: Tunnel30
             openconfig-interfaces:type: tunnel
             openconfig-interfaces:enabled: true
           openconfig-if-tunnel:tunnel:

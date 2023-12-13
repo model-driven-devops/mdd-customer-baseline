@@ -21,7 +21,7 @@ mdd_data:
             openconfig-system-ext:localtime: false
       openconfig-system:config:
         openconfig-system:domain-name: mdd.cisco.com
-        openconfig-system-ext:console-exec-timeout-seconds: 600
+        openconfig-system-ext:console-exec-timeout-seconds: 500
       openconfig-system:dns:
         openconfig-system:servers:
           openconfig-system:server:

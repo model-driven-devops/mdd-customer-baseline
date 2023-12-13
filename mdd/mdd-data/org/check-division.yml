@@ -1,7 +1,7 @@
 mdd_tags:
   - division
 mdd_checks:
-  - name: Check connection to brigade 
+  - name: Check connection to brigade
     command: 'ping 172.23.1.4'
     schema: 'pyats/ping-test.yml'
     method: cli_parse

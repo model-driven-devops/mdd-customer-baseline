@@ -1,0 +1,39 @@
+---
+mdd_data:
+  mdd:openconfig:
+    openconfig-acl:acl:
+      openconfig-acl:acl-sets:
+        openconfig-acl:acl-set:
+          - openconfig-acl:name: NSO
+            openconfig-acl:type: ACL_IPV4_STANDARD
+            openconfig-acl:config:
+              openconfig-acl:name: NSO
+              openconfig-acl:type: ACL_IPV4_STANDARD
+              openconfig-acl:description: NSO
+            openconfig-acl:acl-entries:
+              openconfig-acl:acl-entry:
+                - openconfig-acl:sequence-id: 10
+                  openconfig-acl:config:
+                    openconfig-acl:sequence-id: 10
+                  openconfig-acl:actions:
+                    openconfig-acl:config:
+                      openconfig-acl:forwarding-action: ACCEPT
+                      openconfig-acl:log-action: LOG_NONE
+                  openconfig-acl-ext:ipv4:
+                    openconfig-acl-ext:config:
+                      openconfig-acl-ext:source-address: 172.22.0.0/16
+      openconfig-acl:interfaces:
+        openconfig-acl:interface:
+          - openconfig-acl:id: GigabitEthernet2
+            openconfig-acl:config:
+              openconfig-acl:id: GigabitEthernet2
+            openconfig-acl:interface-ref:
+              openconfig-acl:config:
+                openconfig-acl:interface: GigabitEthernet2
+            openconfig-acl:ingress-acl-sets:
+              openconfig-acl:ingress-acl-set:
+                - openconfig-acl:set-name: NSO
+                  openconfig-acl:type: ACL_IPV4_STANDARD
+                  openconfig-acl:config:
+                    openconfig-acl:set-name: NSO
+                    openconfig-acl:type: ACL_IPV4_STANDARD

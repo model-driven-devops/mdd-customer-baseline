@@ -5,7 +5,7 @@ mdd_data:
       openconfig-interfaces:interface:
         - openconfig-interfaces:name: Tunnel30
           openconfig-interfaces:config:
-            openconfig-interfaces:name: Tunnel3
+            openconfig-interfaces:name: Tunnel30
             openconfig-interfaces:type: tunnel
             openconfig-interfaces:enabled: true
           openconfig-if-tunnel:tunnel:

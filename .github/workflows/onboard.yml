@@ -32,3 +32,8 @@ jobs:
         run: |
           cd mdd
           ansible-playbook ciscops.mdd.nso_sync_from
+
+      - name: NSO Dry-Run
+        run: |
+          cd mdd
+          ansible-playbook ciscops.mdd.update -e dry_run=yes

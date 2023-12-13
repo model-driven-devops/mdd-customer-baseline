@@ -3,6 +3,24 @@ mdd_data:
   mdd:openconfig:
     openconfig-interfaces:interfaces:
       openconfig-interfaces:interface:
+        - openconfig-interfaces:name: Tunnel30
+          openconfig-interfaces:config:
+            openconfig-interfaces:name: Tunnel3
+            openconfig-interfaces:type: tunnel
+            openconfig-interfaces:enabled: true
+          openconfig-if-tunnel:tunnel:
+            openconfig-if-tunnel:config:
+              openconfig-if-tunnel:src: 172.23.5.4
+              openconfig-if-tunnel:dst: 172.23.3.4
+            openconfig-if-tunnel:ipv4:
+              openconfig-if-tunnel:addresses:
+                openconfig-if-tunnel:address:
+                  - openconfig-if-tunnel:ip: 10.100.0.18
+                    openconfig-if-tunnel:config:
+                      openconfig-if-tunnel:ip: 10.100.0.18
+                      openconfig-if-tunnel:prefix-length: 30
+              openconfig-if-tunnel:config:
+                openconfig-if-tunnel:dhcp-client: false
         - openconfig-interfaces:name: GigabitEthernet1
           openconfig-interfaces:config:
             openconfig-interfaces:name: GigabitEthernet1

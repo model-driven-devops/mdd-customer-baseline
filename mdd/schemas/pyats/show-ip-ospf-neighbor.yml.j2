@@ -1,0 +1,37 @@
+type: object
+required:
+  - interfaces
+properties:
+  interfaces:
+    type: object
+    required:
+        - {{ check_vars.interface }}
+    properties:
+      {{ check_vars.interface }}:
+        type: object
+        required:
+            - neighbors
+        properties:
+          neighbors:
+            type: object
+{% for ospf_neighbor in check_vars.ospf_neighbors %}
+            properties:
+              {{ ospf_neighbor.neighbor }}:
+                type: object
+                required:
+                  - address
+                  - dead_time
+                  - priority
+                  - state
+                properties:
+                  address:
+                    type: string
+                    const: {{ ospf_neighbor.address}}
+                  dead_time:
+                    type: string
+                  priority:
+                    type: integer
+                  state:
+                    type: string
+                    const: {{ ospf_neighbor.state }}
+{% endfor %}

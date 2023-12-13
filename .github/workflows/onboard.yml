@@ -2,9 +2,9 @@ name: CI-device-onboard
 
 on:
   workflow_dispatch:
-  pull_request:
+  push:
     paths:
-      - 'army-uno/mdd/inventory/**'
+      - 'mdd/inventory/**'
     branches:
       - '*'
 

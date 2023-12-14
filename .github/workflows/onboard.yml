@@ -5,8 +5,8 @@ on:
   push:
     paths:
       - 'mdd/inventory/**'
-    branches:
-      - '*'
+    branches-ignore:
+      - 'main'
 
 jobs:
   update-devices:

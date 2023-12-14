@@ -10,3 +10,11 @@ mdd_checks:
     command: 'ping 172.23.1.4'
     schema: 'pyats/ping-test.yml'
     method: nso_parse
+  - name: Check connection to US Battalion
+    command: 'ping 172.23.3.4'
+    schema: 'pyats/ping-test.yml'
+    method: nso_parse
+  - name: Check connection to internet
+    command: 'ping 8.8.8.8'
+    schema: 'pyats/ping-test.yml'
+    method: nso_parse

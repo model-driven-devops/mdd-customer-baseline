@@ -2,12 +2,6 @@ name: CI-pipeline
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'mdd/mdd-data/**'
-    branches:
-      - '**'
-      - '!main'  
   pull_request:
     paths:
       - 'mdd/mdd-data/**'

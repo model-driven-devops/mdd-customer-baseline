@@ -37,3 +37,91 @@ jobs:
         run: |
           cd mdd
           ansible-playbook ciscops.mdd.update -e dry_run=yes
+
+  rollback:
+    runs-on: self-hosted
+    environment: army-uno
+    concurrency: army-uno
+    container:
+      image: ghcr.io/model-driven-devops/mdd:latest
+    steps:
+      - name: Checkout Inventory
+        uses: actions/checkout@v4
+
+      - name: Run YAMLLINT in mdd-data
+        run: |
+          cd mdd/mdd-data
+          yamllint .
+      
+      - name: Save Rollback
+        run:  |
+          cd mdd
+          ansible-playbook ciscops.mdd.nso_save_rollback
+
+      - name: Upload Rollback File as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: rollback-file
+          path: mdd/rollback.yaml
+
+  validate:
+    runs-on: self-hosted
+    environment: army-uno
+    concurrency: army-uno
+    needs: rollback
+    container:
+      image: ghcr.io/model-driven-devops/mdd:latest
+    steps:
+      - name: Checkout Inventory
+        uses: actions/checkout@v4
+
+      - name: Data Validation
+        run:  |
+          cd mdd
+          ansible-playbook ciscops.mdd.validate
+  
+  check:
+    runs-on: self-hosted
+    environment: army-uno
+    concurrency: army-uno
+    needs: validate
+    container:
+        image: ghcr.io/model-driven-devops/mdd:latest
+    steps:
+      - name: Checkout Inventory
+        uses: actions/checkout@v4
+  
+      - name: NSO update
+        run:  |
+          cd mdd
+          ansible-playbook ciscops.mdd.update -e dry_run=no
+      
+      - name: Stateful check
+        run:  |
+            cd mdd
+            ansible-playbook ciscops.mdd.check
+ 
+  load-rollback:
+    runs-on: self-hosted
+    needs: check
+    if: ${{ always() }}
+    environment: army-uno
+    concurrency: army-uno
+    container:
+      image: ghcr.io/model-driven-devops/mdd:latest
+
+    steps:
+      - name: Checkout Inventory
+        uses: actions/checkout@v4
+
+      - name: Download Rollback File
+        uses: actions/download-artifact@v3
+        with:
+          name: rollback-file
+          path: mdd
+
+      - name: Load Rollback
+        run: |
+          cd mdd
+          ansible-playbook ciscops.mdd.nso_load_rollback
+          

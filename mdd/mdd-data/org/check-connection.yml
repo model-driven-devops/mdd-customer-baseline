@@ -5,8 +5,8 @@ mdd_checks:
   - name: Check Interface
     command: 'show ip interface brief'
     schema: 'pyats/show_ip_interface_brief.yml'
-    method: cli_parse
+    method: nso_parse
   - name: Check ping
     command: 'ping 8.8.8.8'
     schema: 'pyats/ping-test.yml'
-    method: cli_parse
+    method: nso_parse

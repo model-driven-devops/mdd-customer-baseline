@@ -27,8 +27,8 @@ all:
                   ansible_host: 172.23.1.4
             battalion_routers:
               hosts:
-                # uno-dev-uk-battalion-router:
-                #   ansible_host: 172.23.3.4
+                uno-dev-uk-battalion-router:
+                  ansible_host: 172.23.3.4
                 uno-dev-us-battalion-router:
                   ansible_host: 172.23.2.4
             company_routers:
@@ -62,11 +62,11 @@ all:
                     - battalion
                     - router
                     - stig
-                # uno-dev-uk-battalion-router:
-                #   tags:
-                #     - battalion
-                #     - router
-                #     - stig
+                uno-dev-uk-battalion-router:
+                  tags:
+                    - battalion
+                    - router
+                    - stig
             company:
               hosts:
                 uno-dev-us-company-router:

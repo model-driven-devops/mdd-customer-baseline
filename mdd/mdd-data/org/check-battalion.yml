@@ -1,0 +1,12 @@
+---
+mdd_tags:
+  - battalion
+mdd_checks:
+  - name: Check connection to Division
+    command: 'ping 172.23.0.4'
+    schema: 'pyats/ping-test.yml'
+    method: cli_parse
+  - name: Check connection to Brigade
+    command: 'ping 172.23.1.4'
+    schema: 'pyats/ping-test.yml'
+    method: cli_parse

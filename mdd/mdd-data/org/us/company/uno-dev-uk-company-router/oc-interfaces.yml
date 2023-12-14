@@ -15,9 +15,9 @@ mdd_data:
             openconfig-if-tunnel:ipv4:
               openconfig-if-tunnel:addresses:
                 openconfig-if-tunnel:address:
-                  - openconfig-if-tunnel:ip: 10.0.0.18
+                  - openconfig-if-tunnel:ip: 10.0.100.18
                     openconfig-if-tunnel:config:
-                      openconfig-if-tunnel:ip: 10.0.0.18
+                      openconfig-if-tunnel:ip: 10.0.100.18
                       openconfig-if-tunnel:prefix-length: 30
               openconfig-if-tunnel:config:
                 openconfig-if-tunnel:dhcp-client: false

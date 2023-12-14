@@ -48,6 +48,11 @@ mdd_data:
                 - null
     tailf-ned-cisco-ios:iox: {}
     tailf-ned-cisco-ios:ip:
+      gratuitous-arps-conf: {}
+      domain:
+        lookup-conf:
+          lookup: true
+      name-server: {}
       tcp:
         window-size: 8192
       ssh:
@@ -68,6 +73,8 @@ mdd_data:
         nd:
           - null
       http: {}
+      access-list:
+        standard: {}
     tailf-ned-cisco-ios:ipv6:
       unicast-routing:
         - null
@@ -75,6 +82,10 @@ mdd_data:
       templating: true
     tailf-ned-cisco-ios:multilink:
       bundle-name: authenticated
+    tailf-ned-cisco-ios:archive:
+      log:
+        config:
+          logging: {}
     tailf-ned-cisco-ios:username:
       - name: VALUE_SPECIFIED_IN_NO_LOG_PARAMETER
         privilege: 15
@@ -182,6 +193,11 @@ mdd_data:
                     \ 9FEBADD5 5901220B 823B8830 B0A0ECEB A13E3F4D 6F814D0D 6C7A2F6B\
                     \ \r\n  9646DB81 920C598A 42E269A2 221E6542 F8A3068E\r\n"
     tailf-ned-cisco-ios:interface:
+      Tunnel:
+        - name: 30
+          ip:
+            address: {}
+          tunnel: {}
       GigabitEthernet:
         - name: '1'
           negotiation: {}
@@ -225,9 +241,13 @@ mdd_data:
       buffered: {}
       console: {}
       monitor: {}
+      facility: syslog
     tailf-ned-cisco-ios:diagnostic:
       bootup:
         level: minimal
+    tailf-ned-cisco-ios:router:
+      ospf:
+        - id: 10
     tailf-ned-cisco-ios:memory:
       free:
         low-watermark:

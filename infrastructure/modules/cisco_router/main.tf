@@ -5,7 +5,6 @@ resource "aws_instance" "cisco_router" {
   key_name      = var.key_name
   vpc_security_group_ids = ["sg-0e8ceb25d639b99e0"]
 
-  private_ip = var.primary_private_ip  # Static private IP for the primary interface
 
   user_data = file("${path.cwd}/user_data.txt")
 
@@ -23,7 +22,6 @@ tags = {
 # Secondary Network Interface Resource
 resource "aws_network_interface" "secondary_nic" {
   subnet_id       = var.subnet_id
-  private_ips     = [var.secondary_private_ip]
   security_groups = ["sg-0e8ceb25d639b99e0"]
 
   tags = {

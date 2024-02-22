@@ -13,7 +13,7 @@ variable "instance_type" {
 variable "key_name" {
   description = "The key name of the AWS Key Pair"
   type        = string
-	default     = "lee.vanginkel.uno.key"
+  default     = "lee.vanginkel.uno.key"
 }
 
 # environment specefic inputs

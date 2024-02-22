@@ -1,5 +1,3 @@
-# common inputs
-
 variable "ami_id" {
   description = "The AMI ID for the Cisco router"
   type        = string
@@ -25,17 +23,6 @@ variable "environment" {
   type        = string
 }
 
-variable "secondary_private_ip" {
-  description = "Static private IP for the secondary network interface"
-  type        = string
-}
-
-variable "primary_private_ip" {
-  description = "Static private IP for the primary network interface"
-  type        = string
-}
-
-
 variable "subnet_id" {
   description = "The subnet ID where the Cisco router will be deployed"
   type        = string
@@ -49,5 +36,5 @@ variable "router_name" {
 variable "aws_region" {
   description = "AWS region"
   type        = string
-	default     = "us-gov-west-1" 
+  default     = "us-gov-west-1" 
 }

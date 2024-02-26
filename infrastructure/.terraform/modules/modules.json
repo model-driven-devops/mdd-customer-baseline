@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"ec2_instance","Source":"./modules/ec2","Dir":"modules/ec2"},{"Key":"netbox","Source":"./modules/netbox","Dir":"modules/netbox"},{"Key":"nso","Source":"./modules/nso","Dir":"modules/nso"},{"Key":"s3","Source":"./modules/s3","Dir":"modules/s3"}]}

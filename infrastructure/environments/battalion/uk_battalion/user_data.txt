@@ -1,6 +1,0 @@
-Section: IOS configuration
-username admin privilege 15 password cisco
-no vrf definition GS
-no app-hosting appid guestshell
-no ip access-list standard GS_NAT_ACL
-no interface VirtualPortGroup0

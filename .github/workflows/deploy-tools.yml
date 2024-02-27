@@ -6,7 +6,7 @@ on:
 jobs:
   deploy_nso:
     runs-on:
-      group: customer-baseline
+      group: customer-demos
     env:
       NSO_URL: ${{ secrets.NSO_URL }}
       NSO_HOST: ${{ secrets.NSO_HOST }}

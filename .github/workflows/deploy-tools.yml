@@ -42,9 +42,8 @@ jobs:
         working-directory: ./mdd
 
   deploy_netbox:
-    runs-on: self-hosted
-    environment: army-uno
-    concurrency: army-uno
+    runs-on:
+      group: customer-demos
     env:
       NETBOX_HOST: ${{ secrets.NETBOX_HOST }}
 

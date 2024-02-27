@@ -1,0 +1,89 @@
+name: deploy-tools
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_nso:
+    runs-on: self-hosted
+    environment: army-uno
+    concurrency: army-uno
+    env:
+      NSO_URL: ${{ secrets.NSO_URL }}
+      NSO_HOST: ${{ secrets.NSO_HOST }}
+      AWS_S3_URL: ${{ secrets.AWS_S3_URL }}
+      AWS_S3_URI: ${{ secrets.AWS_S3_URI }}
+      AWS_S3_KEY_NAME: ${{ secrets.AWS_S3_KEY_NAME }}
+      AWS_S3_REGION: ${{ secrets.AWS_S3_REGION }}
+    container:
+      image: ghcr.io/model-driven-devops/mdd:latest
+    steps:
+      - name: Checkout Inventory
+        uses: actions/checkout@v4
+
+      - name: Setup SSH Agent in Container
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_rsa
+          ssh-keyscan -H $NSO_HOST >> ~/.ssh/known_hosts
+          
+      - name: NSO install
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "False"
+          ANSIBLE_SSH_ARGS: "-o ForwardAgent=yes"
+        run:  |
+          ansible-playbook ciscops.mdd.nso_install -vvvv
+          ansible-playbook ciscops.mdd.nso_update_packages
+          ansible-playbook ciscops.mdd.nso_init
+        working-directory: ./mdd
+
+  deploy_netbox:
+    runs-on: self-hosted
+    environment: army-uno
+    concurrency: army-uno
+    env:
+      NETBOX_HOST: ${{ secrets.NETBOX_HOST }}
+
+    steps:
+      - name: Checkout Inventory
+        uses: actions/checkout@v4
+
+      - name: Convert Script Line Endings
+        run: |
+          sed -i 's/\r$//' ./scripts/docker-install.sh
+          sed -i 's/\r$//' ./scripts/netbox-install.sh
+        working-directory: ./mdd
+        
+      - name: Setup SSH Key in Temporary Directory
+        run: |
+          SSH_DIR=$(mktemp -d)
+          SSH_KEY="$SSH_DIR/id_rsa"
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > "$SSH_KEY"
+          chmod 600 "$SSH_KEY"
+          ssh-keyscan -t rsa,ecdsa-sha2-nistp256 $NETBOX_HOST >> "$SSH_DIR/known_hosts"
+          echo "SSH_DIR=$SSH_DIR" >> $GITHUB_ENV
+          echo "SSH_KEY=$SSH_KEY" >> $GITHUB_ENV
+
+      - name: Copy Docker Compose Script
+        run: |
+          scp -o UserKnownHostsFile="$SSH_DIR/known_hosts" -o StrictHostKeyChecking=no -o IdentityFile="$SSH_KEY" -o HostKeyAlgorithms=ssh-rsa,ecdsa-sha2-nistp256 ./scripts/docker-install.sh ubuntu@${{ secrets.NETBOX_HOST }}:/tmp/docker-install.sh
+        working-directory: ./mdd
+      
+      - name: Execute Docker Compose Setup Script on Netbox Host
+        run: |
+          ssh -o UserKnownHostsFile="$SSH_DIR/known_hosts" -o StrictHostKeyChecking=no -o IdentityFile="$SSH_KEY" -o HostKeyAlgorithms=ssh-rsa,ecdsa-sha2-nistp256 ubuntu@${{ secrets.NETBOX_HOST }} 'bash /tmp/docker-install.sh'
+
+      - name: Copy Netbox Script
+        run: |
+          scp -o UserKnownHostsFile="$SSH_DIR/known_hosts" -o StrictHostKeyChecking=no -o IdentityFile="$SSH_KEY" -o HostKeyAlgorithms=ssh-rsa,ecdsa-sha2-nistp256 ./scripts/netbox-install.sh ubuntu@${{ secrets.NETBOX_HOST }}:/tmp/netbox-install.sh
+          scp -o UserKnownHostsFile="$SSH_DIR/known_hosts" -o StrictHostKeyChecking=no -o IdentityFile="$SSH_KEY" -o HostKeyAlgorithms=ssh-rsa,ecdsa-sha2-nistp256 ./netbox/netbox.service ubuntu@${{ secrets.NETBOX_HOST }}:/tmp/netbox.service
+        working-directory: ./mdd
+      
+      - name: Execute Docker Compose Setup Script on Netbox Host
+        run: |
+          ssh -o UserKnownHostsFile="$SSH_DIR/known_hosts" -o StrictHostKeyChecking=no -o IdentityFile="$SSH_KEY" -o HostKeyAlgorithms=ssh-rsa,ecdsa-sha2-nistp256 ubuntu@${{ secrets.NETBOX_HOST }} 'bash /tmp/netbox-install.sh'

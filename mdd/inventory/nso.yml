@@ -5,16 +5,16 @@ all:
       - name: nso-oc-services
         model_list:
           - mdd
-    nso_installer_file: https://uno-nso-install-files.s3.us-gov-west-1.amazonaws.com/nso-6.1.linux.x86_64.signed.bin
+    nso_installer_file: "{{ lookup('env', 'AWS_S3_URL') }}/nso-6.1.linux.x86_64.signed.bin"
     nso_ned_files:
-      - https://uno-nso-install-files.s3.us-gov-west-1.amazonaws.com/ncs-6.1-cisco-ios-6.92.7.signed.bin
+      - "{{ lookup('env', 'AWS_S3_URL') }}/ncs-6.1-cisco-ios-6.92.7.signed.bin"
     nso_package_repos:
       - name: mdd
         repo: https://github.com/model-driven-devops/nso-oc-services.git
         version: v2.80.0
         service_list:
           - mdd
-    nso_rest_url: http://ip-172-22-0-225.us-gov-west-1.compute.internal:8080
+    nso_rest_url: "{{ lookup('env', 'NSO_URL') }}"
     nso_username: ubuntu
     nso_auth_groups:
       default:
@@ -28,5 +28,5 @@ all:
         ansible_python_interpreter: /usr/bin/python3
       hosts:
         nso1:
-          ansible_host: 172.22.0.225
-          ansible_ssh_private_key_file: ~/.ssh/leevanginkelunokey.pem
+          ansible_host: "{{ lookup('env', 'NSO_HOST') }}"
+          ansible_ssh_private_key_file: "~/.ssh/id_rsa"

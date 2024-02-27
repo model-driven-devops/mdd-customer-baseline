@@ -5,9 +5,8 @@ on:
 
 jobs:
   deploy_nso:
-    runs-on: self-hosted
-    environment: army-uno
-    concurrency: army-uno
+    runs-on:
+      group: customer-baseline
     env:
       NSO_URL: ${{ secrets.NSO_URL }}
       NSO_HOST: ${{ secrets.NSO_HOST }}

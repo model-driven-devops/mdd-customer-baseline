@@ -1,0 +1,6 @@
+mdd_data:
+  config:
+    tailf-ned-cisco-ios:vtp:
+      version: 1
+      domain: mdd.com
+      mode: transparent

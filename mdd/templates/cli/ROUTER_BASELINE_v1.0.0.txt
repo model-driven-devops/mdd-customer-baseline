@@ -1,0 +1,182 @@
+!#*********************************************************************************************
+!#***  Type: LIBR Chassis Baseline
+!#
+!#***  Version: 1.0.0
+!#     Adapted from: cNETHW ASR100X_BASELINE_v1.0.0
+!#***  Project: SM0224
+!#***  Doc ID#: TMP511A.CMW00211523.01
+!#*********************************************************************************************
+!#***  Device: Cisco IOS and IOS-XE Routers
+!#*********************************************************************************************
+!#***  Purpose: Use this script to configure the router baseline for a Cisco IOS or IOS-XE
+!#              router.
+!#
+!#***  TEMPLATE NAME: [ROUTER_BASELINE]
+!#
+!#     Ensure the text file naming format matches the template name to allow other templates
+!#     to reference this one.
+!#
+!#*********************************************************************************************
+!#*** Steps for Config Generation (erase this section when completed)
+!#
+!# Replace template variables within '<...>' brackets where:
+!#         (include brackets in S&R)
+!#
+!# ---Variable--- --- Description / Example ------------------------------------------
+!#
+!# <ENA_PASS>     = Enable Secret Password
+!# <OOB_PASS>     = Password for console and VTY access
+!#                  Reference current hardening scripts for passwords.
+!# <MGMT_IFACE>   = Management interface. GigabitEthernet0 is usually the management interface.
+!#                  Uncomment the entire interface configuration if device has a physical 
+!#                  management interface.
+!#
+!#***  These steps must be completed on-site in order to have a complete configuration
+!#
+!# NOTE: In the SNMP location variable, replace "####" with proper Bldg/Floor/Room/Row/Rack
+!#       identifications in ALL CAPS
+!#
+!# NOTE: Ignore any errors due to syntax or missing hardware - several commands are added
+!#       to adhere to STIG requirements.
+!#
+!# NOTE: Telnet is temporarily enabled on VTY lines for initial deployment and is
+!#       expected to be removed per STIG once the hardening script is applied
+!#
+!#       Replace "DEVICE:CURRENT_BOOT_IMAGE" with the device and approved version of IOS
+!#       Example:  "flash:c2800nm-advipservicesk9-mz.150-1.M7.bin"
+!#
+!#       NOTE: You will have to remove the precautionary "!" in front of DEVICE for
+!#             this command to work.
+!#
+!#*********************************************************************************************
+!
+configure terminal
+!
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec show-timezone
+service timestamps log datetime msec show-timezone
+service password-encryption
+service linenumber
+service dhcp
+no service finger
+no service udp-small-servers
+no service tcp-small-servers
+no boot network
+no service config
+no ip identd
+no ip rcmd rcp-enable
+no ip rcmd rsh-enable
+ip tcp synwait-time 10
+ip tcp path-mtu-discovery
+cdp run
+lldp run
+!
+config-register 0x2102
+!
+no platform punt-keepalive disable-kernel-core
+!
+hostname STIGBASELINE
+!
+boot-start-marker
+!boot system flash DEVICE:CURRENT_BOOT_IMAGE
+boot-end-marker
+!
+redundancy
+ mode sso
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+no logging console
+logging buffered 20000 notifications
+logging monitor informational
+logging trap informational
+enable secret <ENA_PASS>
+no enable password
+!
+clock timezone utc 0
+ip subnet-zero
+no ip source-route
+no ip gratuitous-arps
+no ip domain-lookup
+no ip domain lookup
+no ip bootp server
+!
+no snmp-server system-shutdown
+no snmp-server community public RO
+no snmp-server community private RW
+!
+no diagnostic cns publish
+no diagnostic cns subscribe
+!
+voice service voip
+ shutdown
+ h323
+  call service stop
+!
+file verify auto
+!
+!#*** BEGIN - MANAGEMENT PORT SECTION *******************************
+!
+!interface <MGMT_IFACE>
+! description <== MANAGEMENT PORT ==>
+! no ip address
+! no cdp enable 
+! no lldp transmit 
+! no lldp receive 
+! no logging event link-status 
+! no snmp trap link-status
+! shutdown 
+!
+!#*** END - MANAGEMENT PORT SECTION *********************************
+!
+!
+no ip forward-protocol nd
+no ip http server
+no ip http secure-server
+!
+ip classless
+!
+snmp-server location BLDG_####_FLOOR_####_ROOM_####_ROW_####_RACK_####_
+!
+!
+alias exec LIBR_BASE_RTR ROUTER_BASELINE_v1.0.0
+!
+!
+line aux 0
+ password <OOB_PASS>
+ login
+ no exec
+ transport output none
+ stopbits 1
+!
+line con 0
+ exec-timeout 3 0
+ password <OOB_PASS>
+ login
+!
+line vty 0 4
+ exec-timeout 3 0
+ password <OOB_PASS>
+ login
+ transport input telnet
+ transport output none
+!
+line vty 5 15
+ exec-timeout 3 0
+ password <OOB_PASS>
+ login
+ transport input none
+ transport output none
+!
+!
+end
+!
+write memory

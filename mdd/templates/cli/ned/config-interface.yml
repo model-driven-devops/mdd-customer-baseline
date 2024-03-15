@@ -1,0 +1,32 @@
+{% set template_info = {
+  'version': '1.1.0',
+  'adapted_from': 'SWITCH_BASELINE_v1.0.0',
+  'project': 'SM0224',
+  'doc_id': 'TMP511A.CMW00211523.01',
+  'template_name': 'ROUTED_INTERFACE'
+} %}
+mdd_tags:
+  - vlan
+mdd_data:
+  config:
+    tailf-ned-cisco-ios:interface:
+      Vlan:
+{% for vlan in config_vars.vlans %}
+      - name: {{ vlan.name }}
+        description: {{ vlan.description }}
+        ip:
+          no-address:
+            address: false
+{% for ospf in config_vars.router.ospf %}
+{% if 'vlan' + vlan.vlan|string == ospf.interface %}
+          ospf:
+            authentication:
+              key-chain: {{ ospf.key_chain}}
+            message-digest-key:
+            - id: 1
+              md5:
+                type: '7'
+                secret: {{ ospf.ospf_key }}
+{% endif %}
+{% endfor %}
+{% endfor %}

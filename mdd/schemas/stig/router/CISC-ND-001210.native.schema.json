@@ -1,0 +1,49 @@
+{
+  "title": "CISC-ND-001210",
+  "description": "CISC-ND-001210",
+	"metadata": {
+		"finding_id": "V-215845",
+		"rule_id": "SV-215845r879785_rule",
+		"version": "CISC-ND-001210",
+		"severity": "High",
+		"date": "2023-09-14"
+	},
+	"type": "object",
+	"properties": {
+		"tailf-ned-cisco-ios:ip": {
+			"type": "object",
+			"properties": {
+				"ssh": {
+					"type": "object",
+					"properties": {
+						"version": { "type": "integer" },
+						"server": {
+							"type": "object",
+							"properties": {
+								"algorithm": {
+									"type": "object",
+									"properties": {
+										"encryption": {
+											"type": "array",
+											"items": { "type": "string",
+											"enum": ["aes256-ctr", "aes192-ctr", "aes128-ctr"]
+										},
+										"minItems": 3,
+										"maxItems": 3,
+										"uniqueItems": true
+									}
+										},
+										"required": ["encryption"]
+									}
+								},
+								"required": ["algorithm"]
+							}
+						},
+						"required": ["version", "server"]
+					}
+				},
+				"required": ["ssh"]
+			}
+		},
+		"required": ["tailf-ned-cisco-ios:ip"]
+	}

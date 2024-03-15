@@ -1,0 +1,546 @@
+mdd_data:
+  config:
+    tailf-ned-cisco-ios:hostname: mdd-router-test
+    tailf-ned-cisco-ios:tailfned:
+      police: cirmode
+    tailf-ned-cisco-ios:version: '17.9'
+    tailf-ned-cisco-ios:service:
+      conf:
+        pad: false
+      tcp-keepalives-in:
+      - null
+      tcp-keepalives-out:
+      - null
+      timestamps:
+        debug:
+          datetime: {}
+        log:
+          datetime: {}
+      password-encryption: {}
+      linenumber:
+      - null
+      call-home:
+      - null
+    tailf-ned-cisco-ios:login:
+      on-failure:
+        log:
+        - null
+      on-success:
+        log:
+        - null
+    tailf-ned-cisco-ios:cdp:
+      run: true
+    tailf-ned-cisco-ios:platform:
+      console: virtual
+      punt-keepalive:
+        disable-kernel-core: true
+      qfp:
+        utilization:
+          monitor:
+            load: 80
+    tailf-ned-cisco-ios:vrf:
+      definition:
+      - name: Mgmt-intf
+        address-family:
+          ipv4: {}
+          ipv6: {}
+    tailf-ned-cisco-ios:enable:
+      secret:
+        type: '9'
+        secret: $9$ivaELzcjtZnytU$pJthMLGZuPmSdT//lNE306KuS8sJpRHh/IDTbfKHccE
+    tailf-ned-cisco-ios:aaa:
+      new-model:
+      - null
+      authentication:
+        login:
+        - name: default
+          local:
+          - null
+      authorization:
+        exec:
+        - name: default
+          local:
+          - null
+          none:
+          - null
+      common-criteria:
+        policy:
+        - name: password
+          min-length: 15
+          max-length: 127
+          char-changes: 4
+      session-id: common
+    tailf-ned-cisco-ios:clock:
+      timezone:
+        zone: utc
+        hours: 0
+        minutes: 0
+    tailf-ned-cisco-ios:call-home:
+      contact-email-addr: sch-smart-licensing@cisco.com
+      profile:
+      - name: CiscoTAC-1
+        active: true
+        reporting:
+          smart-licensing-data: true
+        destination:
+          transport-method:
+            http:
+            - null
+    tailf-ned-cisco-ios:iox: {}
+    tailf-ned-cisco-ios:ip:
+      gratuitous-arps-conf:
+        gratuitous-arps: false
+      domain:
+        lookup-conf:
+          lookup: false
+      tcp:
+        path-mtu-discovery: {}
+        window-size: 8192
+        synwait-time: 10
+      ssh:
+        version: 2
+        server:
+          algorithm:
+            encryption:
+            - aes256-ctr
+            - aes192-ctr
+            - aes128-ctr
+        rsa:
+          keypair-name: ssh-key
+        pubkey-chain:
+          username:
+          - name: ec2-user
+            key-hash:
+            - key-type: ssh-rsa
+              key-name: 6342B53CCD22B080EE6628ACFE6FBBD6
+              key-comment: ec2-user
+      scp:
+        server:
+          enable:
+          - null
+      forward-protocol:
+        nd:
+        - null
+      http:
+        server: false
+        secure-server: true
+      route:
+        ip-route-interface-forwarding-list:
+        - prefix: 0.0.0.0
+          mask: 0.0.0.0
+          interface: GigabitEthernet1
+          forwarding-address: 172.31.32.1
+        ip-route-forwarding-list:
+        - prefix: 10.60.0.0
+          mask: 255.255.255.0
+          forwarding-address: 10.66.10.4
+          name: SSL_VPN_BuRAS_Pool
+      # access-list:
+      #   extended:
+      #     ext-named-acl:
+      #     - name: COPP_CRITICAL
+      #       ext-access-list-rule:
+      #       - rule: 10 permit eigrp any any
+      #       - rule: 20 permit ospf any any
+      #       - rule: 30 permit pim any any
+      #       - rule: 40 permit igmp any any
+      #       - rule: 50 permit tcp any eq bgp any
+      #       - rule: 60 permit tcp any any eq bgp
+      #       - rule: 70 permit gre any any
+      #       - rule: 80 remark - Allow LDP ports
+      #       - rule: 80 permit tcp any eq 646 any
+      #       - rule: 90 permit udp any eq 646 any
+      #       - rule: 100 remark - Allow LISP
+      #       - rule: 100 permit udp any eq 4324 any
+      #       - rule: 110 remark - Allow GDOI
+      #       - rule: 110 permit udp any eq 848 any
+      #       - rule: 120 remark - Allow HSRP
+      #       - rule: 120 permit udp any eq 1985 any
+      #     - name: COPP_IMPORTANT
+      #       ext-access-list-rule:
+      #       - rule: 10 permit tcp any eq tacacs any
+      #       - rule: 20 permit udp any any eq snmp
+      #       - rule: 30 permit udp any eq ntp any
+      #     - name: COPP_NORMAL
+      #       ext-access-list-rule:
+      #       - rule: 10 permit icmp any any echo
+      #       - rule: 20 permit icmp any any echo-reply
+      #       - rule: 30 permit icmp any any time-exceeded
+      #       - rule: 40 permit icmp any any unreachable
+      #       - rule: 50 permit tcp any any eq 22
+      #     - name: COPP_UNDESIRABLE
+      #       ext-access-list-rule:
+      #       - rule: 10 permit udp any any eq rip
+      #       - rule: 20 permit icmp any any fragments
+    tailf-ned-cisco-ios:ipv6:
+      unicast-routing:
+      - null
+    tailf-ned-cisco-ios:subscriber:
+      templating: true
+    tailf-ned-cisco-ios:multilink:
+      bundle-name: authenticated
+    tailf-ned-cisco-ios:archive:
+      log:
+        config:
+          logging:
+            enable:
+            - null
+    tailf-ned-cisco-ios:username:
+    - name: VALUE_SPECIFIED_IN_NO_LOG_PARAMETER
+      privilege: 15
+      password:
+        type: '7'
+        secret: 00071A150754
+    - name: VALUE_SPECIFIED_IN_NO_LOG_PARAMETER
+      privilege: 15
+      password:
+        type: '7'
+        secret: 1511021F0725
+    - name: ec2-user
+      privilege: 15
+    tailf-ned-cisco-ios:redundancy: {}
+    # tailf-ned-cisco-ios:class-map:
+    # - name: CM_COPP_CRITICAL
+    #   prematch: match-all
+    #   match:
+    #     access-group:
+    #       name:
+    #       - COPP_CRITICAL
+    # - name: CM_COPP_IMPORTANT
+    #   prematch: match-any
+    #   match:
+    #     access-group:
+    #       name:
+    #       - COPP_IMPORTANT
+    #     protocol:
+    #       protocol-list:
+    #       - name: arp
+    # - name: CM_COPP_NORMAL
+    #   prematch: match-all
+    #   match:
+    #     access-group:
+    #       name:
+    #       - COPP_NORMAL
+    # - name: CM_COPP_UNDESIRABLE
+    #   prematch: match-any
+    #   match:
+    #     access-group:
+    #       name:
+    #       - COPP_UNDESIRABLE
+    # tailf-ned-cisco-ios:policy-map:
+    # - name: COPP_POLICY
+    #   class:
+    #   - name: CM_COPP_CRITICAL
+    #     police-policy-map:
+    #       police:
+    #         cir: '192000000'
+    #         actions:
+    #           conform-transmit:
+    #             conform-action:
+    #               transmit:
+    #               - null
+    #           exceed-transmit:
+    #             exceed-action:
+    #               transmit:
+    #               - null
+    #   - name: CM_COPP_IMPORTANT
+    #     police-policy-map:
+    #       police:
+    #         cir: '25600000'
+    #         actions:
+    #           conform-transmit:
+    #             conform-action:
+    #               transmit:
+    #               - null
+    #           exceed-drop:
+    #             exceed-action:
+    #               drop:
+    #               - null
+    #   - name: CM_COPP_NORMAL
+    #     police-policy-map:
+    #       police:
+    #         cir: '256000000'
+    #         actions:
+    #           conform-transmit:
+    #             conform-action:
+    #               transmit:
+    #               - null
+    #           exceed-drop:
+    #             exceed-action:
+    #               drop:
+    #               - null
+    #   - name: CM_COPP_UNDESIRABLE
+    #     police-rate-unit:
+    #       police:
+    #         rate:
+    #           units: '1'
+    #           xps: pps
+    #           actions:
+    #             conform-drop:
+    #               conform-action:
+    #                 drop:
+    #                 - null
+    #             exceed-drop:
+    #               exceed-action:
+    #                 drop:
+    #                 - null
+    #   class-default:
+    #     class:
+    #     - name: class-default
+    #       police-policy-map:
+    #         police:
+    #           cir: '256000000'
+    #           actions:
+    #             conform-transmit:
+    #               conform-action:
+    #                 transmit:
+    #                 - null
+    #             exceed-drop:
+    #               exceed-action:
+    #                 drop:
+    #                 - null
+    tailf-ned-cisco-ios:vtp:
+      version: 1
+      domain: mdd.com
+      mode: transparent
+    tailf-ned-cisco-ios:vlan:
+      vlan-list:
+      - id: 1
+        name: default
+    tailf-ned-cisco-ios:lldp:
+      run:
+      - null
+    tailf-ned-cisco-ios:crypto:
+      pki:
+        trustpoint:
+        - id: SLA-TrustPoint
+          enrollment:
+            pkcs12:
+            - null
+          revocation-check:
+          - crl
+        - id: TP-self-signed-3246828086
+          enrollment:
+            selfsigned:
+            - null
+          subject-name: cn=IOS-Self-Signed-Certificate-3246828086
+          revocation-check:
+          - none
+          rsakeypair:
+            key-label: TP-self-signed-3246828086
+        certificate:
+          chain:
+          - name: SLA-TrustPoint
+            certificate:
+            - serial: '01'
+              cert-type: ca
+              cert: "  30820321 30820209 A0030201 02020101 300D0609 2A864886 F70D0101
+                0B050030 \r\n  32310E30 0C060355 040A1305 43697363 6F312030 1E060355
+                04031317 43697363 \r\n  6F204C69 63656E73 696E6720 526F6F74 20434130
+                1E170D31 33303533 30313934 \r\n  3834375A 170D3338 30353330 31393438
+                34375A30 32310E30 0C060355 040A1305 \r\n  43697363 6F312030 1E060355
+                04031317 43697363 6F204C69 63656E73 696E6720 \r\n  526F6F74 20434130
+                82012230 0D06092A 864886F7 0D010101 05000382 010F0030 \r\n  82010A02
+                82010100 A6BCBD96 131E05F7 145EA72C 2CD686E6 17222EA1 F1EFF64D \r\n
+                \ CBB4C798 212AA147 C655D8D7 9471380D 8711441E 1AAF071A 9CAE6388 8A38E520
+                \r\n  1C394D78 462EF239 C659F715 B98C0A59 5BBB5CBD 0CFEBEA3 700A8BF7
+                D8F256EE \r\n  4AA4E80D DB6FD1C9 60B1FD18 FFC69C96 6FA68957 A2617DE7
+                104FDC5F EA2956AC \r\n  7390A3EB 2B5436AD C847A2C5 DAB553EB 69A9A535
+                58E9F3E3 C0BD23CF 58BD7188 \r\n  68E69491 20F320E7 948E71D7 AE3BCC84
+                F10684C7 4BC8E00F 539BA42B 42C68BB7 \r\n  C7479096 B4CB2D62 EA2F505D
+                C7B062A4 6811D95B E8250FC4 5D5D5FB8 8F27D191 \r\n  C55F0D76 61F9A4CD
+                3D992327 A8BB03BD 4E6D7069 7CBADF8B DF5F4368 95135E44 \r\n  DFC7C6CF
+                04DD7FD1 02030100 01A34230 40300E06 03551D0F 0101FF04 04030201 \r\n
+                \ 06300F06 03551D13 0101FF04 05300301 01FF301D 0603551D 0E041604 1449DC85
+                \r\n  4B3D31E5 1B3E6A17 606AF333 3D3B4C73 E8300D06 092A8648 86F70D01
+                010B0500 \r\n  03820101 00507F24 D3932A66 86025D9F E838AE5C 6D4DF6B0
+                49631C78 240DA905 \r\n  604EDCDE FF4FED2B 77FC460E CD636FDB DD44681E
+                3A5673AB 9093D3B1 6C9E3D8B \r\n  D98987BF E40CBD9E 1AECA0C2 2189BB5C
+                8FA85686 CD98B646 5575B146 8DFC66A8 \r\n  467A3DF4 4D565700 6ADF0F0D
+                CF835015 3C04FF7C 21E878AC 11BA9CD2 55A9232C \r\n  7CA7B7E6 C1AF74F6
+                152E99B7 B1FCF9BB E973DE7F 5BDDEB86 C71E3B49 1765308B \r\n  5FB0DA06
+                B92AFE7F 494E8A9E 07B85737 F3A58BE1 1A48A229 C37C1E69 39F08678 \r\n
+                \ 80DDCD16 D6BACECA EEBC7CF9 8428787B 35202CDC 60E4616A B623CDBD 230E3AFB
+                \r\n  418616A9 4093E049 4D10AB75 27E86F73 932E35B5 8862FDAE 0275156F
+                719BB2F0 \r\n  D697DF7F 28\r\n"
+          - name: TP-self-signed-3246828086
+            certificate:
+            - serial: '01'
+              cert-type: self-signed
+              cert: "  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101
+                05050030 \r\n  31312F30 2D060355 04031326 494F532D 53656C66 2D536967
+                6E65642D 43657274 \r\n  69666963 6174652D 33323436 38323830 3836301E
+                170D3234 30333036 31383331 \r\n  31375A17 0D333430 33303631 38333131
+                375A3031 312F302D 06035504 03132649 \r\n  4F532D53 656C662D 5369676E
+                65642D43 65727469 66696361 74652D33 32343638 \r\n  32383038 36308201
+                22300D06 092A8648 86F70D01 01010500 0382010F 00308201 \r\n  0A028201
+                0100C9A4 1896C7E9 ECAB1E98 7D03968B 125CE237 8AD99E9C 9ABEC939 \r\n
+                \ 52C8AC9D ECD096F7 06F68128 4F9B75E8 F706F3C1 E48E90DC A04B91D3 D4A4A871
+                \r\n  414949A0 6DB7F730 6F1C66DF AD3F7C37 67D3EC20 97D49926 2B01B947
+                AFE63B07 \r\n  D5B8A6F2 F0A10937 5F351A4C A07CFE64 43B9279F 5A9A5A42
+                96F9F3AE 83767F4E \r\n  5D7E4C5C 5A301531 8817FB4D 54E4E085 3CE7F3D2
+                65E381F2 5C60A688 48E23B9A \r\n  1923FA65 4F78F203 0BAC7E65 DD29C291
+                61C0F84E C1B6DC9C 8F52C8EF CB7F8351 \r\n  0BA5038C 9D3FB248 71A38C10
+                A8372A92 37A1842A 656000A9 C286B7E4 C6181CFD \r\n  0AC5CEBF EECD87BF
+                19A8DA81 C16F5E3D ADF40C4B A4A78972 68928537 0336A6BB \r\n  19BF9E22
+                64070203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF \r\n
+                \ 301F0603 551D2304 18301680 14A89DE0 8EB3D729 44F30C83 814A98D9 3342EF9B
+                \r\n  0A301D06 03551D0E 04160414 A89DE08E B3D72944 F30C8381 4A98D933
+                42EF9B0A \r\n  300D0609 2A864886 F70D0101 05050003 82010100 913B27A8
+                386C146C B58A5782 \r\n  B3206C21 F3AE4AB1 39472394 B35BA1BB B82129A5
+                DF85C1BB 23C15021 2BD03DF7 \r\n  08DD0F44 8A43C8AA 215D2CD2 1E685302
+                1D32AEC7 17A32CEC 1E8A3F44 D38B2BC5 \r\n  D29E767A 235C20D5 E2E17B0E
+                AB8A86D6 E42033D2 882E49A2 37CCEE8F 0A753880 \r\n  3DE19238 322B256D
+                04E13A06 456C0BF2 576F3DF5 D41704DF 950D3A22 86972A04 \r\n  59AF252E
+                E388CC02 EB6CD714 45C4698A F7D30DB2 9ED69230 87690D4A 6B4ADC6E \r\n
+                \ DE192057 72CF6144 0F5F5457 71CD6185 18DC1095 509C3737 E0D99F38 26350885
+                \r\n  76483943 9D938B29 D9D4E1D1 07C81FAC E9E14D75 84810F5C 16357B04
+                1337011D \r\n  67EEE0A5 FCE52A4C 3B33A2F8 B4D9883C 0E7CC67D\r\n"
+    tailf-ned-cisco-ios:interface:
+      GigabitEthernet:
+      - name: '1'
+        negotiation:
+          auto: true
+        ip:
+          address:
+            dhcp: {}
+          nat:
+            outside:
+            - null
+        ipv6:
+          address:
+            dhcp: {}
+          enable:
+          - null
+          nd:
+            autoconfig:
+              default-route:
+              - null
+      - name: '2'
+        description: <== interface ==>
+        negotiation:
+          auto: false
+        speed: '1000'
+        bandwidth:
+          kilobits: 50000
+        cdp:
+          enable: true
+        ip:
+          address:
+            primary:
+              address: 100.13.32.12
+              mask: 255.255.255.0
+          helper-address:
+            helper-address-list:
+            - address: 192.168.244.1
+          unreachables: false
+          proxy-arp: false
+          redirects: false
+      Vlan:
+      - name: 100
+        description: vlan100
+        ip:
+          no-address:
+            address: false
+      - name: 200
+        description: vlan200
+        ip:
+          no-address:
+            address: false
+          ospf:
+            authentication:
+              key-chain: 00332432134C1F574E
+            message-digest-key:
+            - id: 1
+              md5:
+                type: '7'
+                secret: 144747582F577B78067B6560004626435B540E
+      - name: 301
+        description: <== vlan200  ==>
+        bandwidth:
+          kilobits: 50000
+        ip:
+          address:
+            primary:
+              address: 192.168.200.1
+              mask: 255.255.255.0
+          proxy-arp: false
+          redirects: false
+    tailf-ned-cisco-ios:control-plane:
+      service-policy:
+        input: COPP_POLICY
+    tailf-ned-cisco-ios:line:
+      console:
+      - first: '0'
+        stopbits: '1'
+      aux:
+      - first: '0'
+        exec-choice:
+          exec: false
+        password:
+          type: '7'
+          secret: 00071A150754
+        transport:
+          output:
+          - none
+      vty:
+      - first: 0
+        last: 4
+        transport:
+          input:
+          - ssh
+      - first: 5
+        last: 20
+        transport:
+          input:
+          - ssh
+    tailf-ned-cisco-ios:logging:
+      buffered:
+        buffer-size: 20000
+        severity-level: notifications
+      persistent:
+        size: 1000000
+        filesize: 8192
+      monitor:
+        severity-level: informational
+    tailf-ned-cisco-ios:diagnostic:
+      bootup:
+        level: minimal
+    tailf-ned-cisco-ios:errdisable:
+      recovery:
+        cause:
+          udld:
+          - null
+        interval: 60
+    tailf-ned-cisco-ios:router:
+      ospf:
+      - id: 100
+        area:
+        - id: 10
+          authentication:
+            message-digest:
+            - null
+        passive-interface:
+          default:
+          - null
+      - id: 1001
+        network:
+        - ip: 10.66.0.0
+          mask: 0.0.0.255
+          area: 0
+    tailf-ned-cisco-ios:snmp-server:
+      location: BLDG_####_FLOOR_####_ROOM_####_ROW_####_RACK_####_
+    tailf-ned-cisco-ios:memory:
+      free:
+        low-watermark:
+          processor: 63976
+    tailf-ned-cisco-ios:alias:
+    - mode: exec
+      name: LIBR-COPP
+      line: COPP_BASELINE_v1.1.0
+    - mode: exec
+      name: LIBR_BASE_RTR
+      line: ROUTER_BASELINE_v1.0.0
+    - mode: exec
+      name: LIBR_OSPF
+      line: OSPF_BASELINE_v1.0.0

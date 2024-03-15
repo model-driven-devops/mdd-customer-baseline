@@ -1,0 +1,47 @@
+{
+	"title": "CISR-ND-000055 Schema",
+  "description": "CISC-ND-000055",
+	"metadata": {
+		"finding_id": "V-74011",
+		"rule_id": "SV-88685r2_rule",
+		"version": "CISR-ND-000055",
+		"severity": "medium",
+		"date": "2018-12-20"
+	},
+  "type": "object",
+  "properties": {
+    "tailf-ned-cisco-ios:aaa": {
+      "type": "object",
+      "properties": {
+        "common-criteria": {
+          "type": "object",
+          "properties": {
+            "policy": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "min-length": {
+                    "type": "integer",
+                    "minimum": 15
+                  },
+                  "max-length": {
+                    "type": "integer",
+                    "minimum": 15,
+                    "maximum": 127
+                  },
+                  "char-changes": { "type": "integer" }
+                },
+                "required": ["name", "min-length", "max-length", "char-changes"]
+              }
+            }
+          },
+          "required": ["policy"]
+        }
+      },
+      "required": ["common-criteria"]
+    }
+  },
+  "required": ["tailf-ned-cisco-ios:aaa"]
+}

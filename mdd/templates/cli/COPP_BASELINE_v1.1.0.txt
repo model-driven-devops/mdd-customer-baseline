@@ -1,0 +1,102 @@
+!#*********************************************************************************************
+!#***  Type: NMS CoPP
+!#
+!#***  Version: 1.1.0
+!#     Adapted from: 1.0.0
+!#***  Project: SM0224
+!#***  Doc ID#: TMP511A.CMW00211523.01
+!#*********************************************************************************************
+!#***  Device: IOS-XE devices
+!#*********************************************************************************************
+!#***  Purpose: Apply enterprise control plane policy (CoPP).
+!#
+!#***  Restrictions: Do not apply this template to Catalyst 9K switches.
+!#
+!#***  TEMPLATE NAME: [COPP_BASELINE]
+!#
+!#     Ensure the text file naming format matches the template name to allow other
+!#     templates to reference this one.
+!#
+!#*********************************************************************************************
+!
+configure terminal
+!
+!
+ip access-list extended COPP_CRITICAL
+ permit eigrp any any
+ permit ospf any any
+ permit pim any any
+ permit igmp any any
+ permit tcp any eq bgp any
+ permit tcp any any eq bgp
+ permit gre any any
+ remark - Allow LDP ports
+ permit tcp any eq 646 any
+ permit udp any eq 646 any
+ remark - Allow LISP
+ permit udp any eq 4324 any
+ remark - Allow GDOI
+ permit udp any eq 848 any
+ remark - Allow HSRP
+ permit udp any eq 1985 any
+!
+ip access-list extended COPP_IMPORTANT
+ permit tcp any eq tacacs any
+ permit udp any any eq snmp
+ permit udp any eq ntp any
+!
+ip access-list extended COPP_NORMAL
+ permit icmp any any echo
+ permit icmp any any echo-reply
+ permit icmp any any time-exceeded
+ permit icmp any any unreachable
+ permit tcp any any eq 22
+!
+ip access-list extended COPP_UNDESIRABLE
+ permit udp any any eq rip
+ permit icmp any any fragments
+!
+!
+class-map match-all CM_COPP_CRITICAL
+ match access-group name COPP_CRITICAL
+!
+class-map match-any CM_COPP_IMPORTANT
+ match access-group name COPP_IMPORTANT
+ match protocol arp
+!
+class-map match-all CM_COPP_NORMAL
+ match access-group name COPP_NORMAL
+!
+class-map match-any CM_COPP_UNDESIRABLE
+ match access-group name COPP_UNDESIRABLE
+!
+!
+policy-map COPP_POLICY
+!
+ class CM_COPP_CRITICAL
+  police 192000000 conform-action transmit exceed-action transmit
+ !
+ class CM_COPP_IMPORTANT
+  police 25600000 conform-action transmit exceed-action drop
+ !
+ class CM_COPP_NORMAL
+  police 256000000 conform-action transmit exceed-action drop
+ !
+ class CM_COPP_UNDESIRABLE
+  police rate 1 pps conform-action drop exceed-action drop
+ !
+ class class-default
+  police 256000000 conform-action transmit exceed-action drop
+!
+!
+control-plane
+ service-policy input COPP_POLICY
+!
+!
+exit
+!
+alias exec LIBR-COPP COPP_BASELINE_v1.1.0
+!
+end
+!
+write memory

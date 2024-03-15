@@ -16,27 +16,142 @@ all:
     network:
       children:
         routers:
-          children:
-            division_routers:
-              hosts:
-                uno-dev-division-router:
-                  ansible_host: 172.23.0.4
-            brigade_routers:
-              hosts:
-                uno-dev-brigade-router:
-                  ansible_host: 172.23.1.4
-            battalion_routers:
-              hosts:
-                # uno-dev-uk-battalion-router:
-                #   ansible_host: 172.23.3.4
-                uno-dev-us-battalion-router:
-                  ansible_host: 172.23.2.4
-            company_routers:
-              hosts:
-                uno-dev-uk-company-router:
-                  ansible_host: 172.23.5.4
-                uno-dev-us-company-router:
-                  ansible_host: 172.23.4.4
+          hosts:
+            mdd-router:
+              ansible_host: 172.31.42.163
+              config_vars:
+                vtp_mode: transparent
+                vtp_domain: mdd.cisco.com
+                interfaces:
+                  - interface: GigabitEthernet1
+# Structure for COPP Baseline
+                access_lists:
+                  extended:
+                    - name: COPP_CRITICAL
+                      rules:
+                        - "10 permit eigrp any any"
+                        - "20 permit ospf any any"
+                        - "30 permit pim any any"
+                    - name: COPP_IMPORTANT
+                      rules:
+                        - "10 permit tcp any eq tacacs any"
+                        - "20 permit udp any any eq snmp"
+                        - "30 permit udp any eq ntp any"
+                    - name: COPP_NORMAL
+                      rules:
+                        - "10 permit icmp any any echo"
+                        - "20 permit icmp any any echo-reply"
+                        - "30 permit icmp any any time-exceeded"
+                        - "40 permit icmp any any unreachable"
+# Class Map for COPP Template
+                class_map:
+                  - name: CM_COPP_CRITICAL
+                    prematch: match-all
+                    access_group:
+                      - COPP_CRITICAL
+                  - name: CM_COPP_IMPORTANT
+                    prematch: match-all
+                    access_group:
+                      - COPP_IMPORTANT
+                    protocol_list:
+                      name:
+                        - arp
+# Policy Map for COPP Template
+                policy_map:
+                  - name: COPP_POLICY
+                    class:
+                      - name: CM_COPP_CRITICAL
+                        police_policy_map:
+                          police:
+                            cir: '192000000'
+                            actions:
+                              conform_transmit: true
+                              exceed_transmit: true
+                      - name: CM_COPP_IMPORTANT
+                        police_policy_map:
+                          police:
+                            cir: '25600000'
+                            actions:
+                              conform_transmit: true
+                              exceed_drop: true
+                      - name: CM_COPP_NORMAL
+                        police_policy_map:
+                          police:
+                            cir: '256000000'
+                            actions:
+                              conform_transmit: true
+                              exceed_drop: true
+                      - name: CM_COPP_UNDESIRABLE
+                        police_rate_unit:
+                          police:
+                            rate:
+                              units: '1'
+                              xps: pps
+                            actions:
+                              conform_drop: true
+                              exceed_drop: true
+                  - name: class-default
+                    class:
+                      - name: class-default
+                        police_policy_map:
+                          police:
+                            cir: '256000000'
+                            actions:
+                              conform_transmit: true
+                              exceed_drop: true              
+                vlans:
+                  - vlan: 100
+                    name: 100
+                    description: vlan100
+                  - vlan: 200
+                    name: 200
+                    description: vlan200
+                  - vlan: 300
+                    name: 300
+                    description: vlan300
+                router:
+                  ospf:
+                    - process_id: 1001
+                      ip: 10.66.0.0
+                      mask: 0.0.0.255
+                      area: 0
+                      interface: vlan200
+                      key_chain: 565654
+                      ospf_key: 144747582F577B78067B6560004626435B540E
+                    - process_id: 100
+                      area_id: 10
+                    - process_id: 110
+                      area_id: 20
+                ip:
+                  route:
+                    - prefix: 10.60.0.0
+                      mask: 255.255.255.0
+                      forwarding_address: 10.66.10.4
+                      name: SSL_VPN_BuRAS_Pool
+                    - prefix: 0.0.0.0
+                      interface: GigabitEthernet1
+                      mask: 0.0.0.0
+                      forwarding_address: 172.31.32.1
+            # division_routers:
+            #   hosts:
+            #     uno-dev-division-router:
+            #       ansible_host: 172.23.0.4
+            # brigade_routers:
+            #   hosts:
+            #     uno-dev-brigade-router:
+            #       ansible_host: 172.23.1.4
+            # battalion_routers:
+            #   hosts:
+            #     # uno-dev-uk-battalion-router:
+            #     #   ansible_host: 172.23.3.4
+            #     uno-dev-us-battalion-router:
+            #       ansible_host: 172.23.2.4
+            # company_routers:
+            #   hosts:
+            #     uno-dev-uk-company-router:
+            #       ansible_host: 172.23.5.4
+            #     uno-dev-us-company-router:
+            #       ansible_host: 172.23.4.4
     org:
       children:
         us:
@@ -79,3 +194,9 @@ all:
                     - company
                     - router
                     - stig
+                mdd-router:
+                  tags:
+                    - company
+                    - router
+                    - stig
+                    - copp

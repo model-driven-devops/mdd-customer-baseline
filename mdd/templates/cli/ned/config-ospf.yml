@@ -1,0 +1,38 @@
+{% set template_info = {
+  'version': '1.1.0',
+  'adapted_from': 'cNETHW STATIC_ROUTE_v1.0.0',
+  'project': 'SM1069',
+  'doc_id': 'cNETHW System Installation and Configuration',
+  'template_name': 'OSPF_NETWORK'
+} %}
+mdd_data:
+  config:
+{% if config_vars.router is defined %}    
+    tailf-ned-cisco-ios:router:
+{% if config_vars.router.ospf is defined %}
+      ospf:
+{% for ospf in config_vars.router.ospf %}
+{% if ospf.ip is defined %}
+        - id: {{ ospf.process_id }}
+          network:
+            - ip: {{ ospf.ip }}
+              mask: {{ ospf.mask }}
+              area: {{ ospf.area }}
+{% else %}
+        - id: {{ ospf.process_id }}
+          area:
+          - id: {{ ospf.area_id }}
+            authentication:
+              message-digest:
+              - null
+          passive-interface:
+            default:
+            - null
+{% endif %}
+{% endfor %}
+{% endif %}
+    tailf-ned-cisco-ios:alias:
+      - mode: exec
+        name: cNETHW_OSPF_NET
+        line: Cisco_OSPF_Network_v1.1.0
+{% endif %}

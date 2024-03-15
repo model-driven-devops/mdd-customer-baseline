@@ -1,0 +1,8 @@
+mdd_data:
+  config:
+{% if config_vars.vtp_domain is defined %}
+    tailf-ned-cisco-ios:vtp:
+      version: 1
+      domain: {{ config_vars.vtp_domain }}
+      mode: {{ config_vars.vtp_mode }}
+{% endif %}

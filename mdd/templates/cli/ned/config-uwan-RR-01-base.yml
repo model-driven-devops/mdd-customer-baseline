@@ -1,0 +1,56 @@
+{% set template_info = {
+  'version': '1.0.0',
+  'adapted_from': 'cNETHW ASR100X_BASELINE_v1.0.0',
+  'project': 'SM0224',
+  'doc_id': 'TMP511A.CMW00211523.01',
+  'template_name': 'ROUTER_BASELINE'
+} %}
+mdd_data:
+  config:
+    tailf-ned-cisco-ios:service:
+      conf:
+        pad: false
+      tcp-keepalives-in:
+      - null
+      tcp-keepalives-out:
+      - null
+      timestamps:
+        debug:
+          datetime: {}
+        log:
+          datetime: {}
+      password-encryption: {}
+      linenumber:
+      - null
+    tailf-ned-cisco-ios:cdp:
+      run: true
+    tailf-ned-cisco-ios:vrf:
+      definition:
+      - name: Mgmt-intf
+        address-family:
+          ipv4: {}
+          ipv6: {}
+    tailf-ned-cisco-ios:clock:
+      timezone:
+        zone: utc
+        hours: 0
+        minutes: 0
+    tailf-ned-cisco-ios:ip:
+      gratuitous-arps-conf:
+        gratuitous-arps: false
+      domain:
+        lookup-conf:
+          lookup: false
+      tcp:
+        path-mtu-discovery: {}
+        window-size: 8192
+        synwait-time: 10
+    tailf-ned-cisco-ios:snmp-server:
+      location: BLDG_####_FLOOR_####_ROOM_####_ROW_####_RACK_####_
+    tailf-ned-cisco-ios:lldp:
+      run:
+      - null
+    tailf-ned-cisco-ios:alias:
+    - mode: exec
+      name: LIBR_BASE_RTR
+      line: ROUTER_BASELINE_v1.0.0

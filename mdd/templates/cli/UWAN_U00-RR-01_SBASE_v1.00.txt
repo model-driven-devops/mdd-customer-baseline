@@ -1,0 +1,382 @@
+!#*********************************************************************************************
+!#***  Type: Unclassified Transport Boundary
+!#
+!#***  Version: 1.0.0
+!#     Adapted from: U00-RR_MPLS_v1_0_1
+!#***  Project: SM1069
+!#***  Doc Name: uWAN System Installation and Configuration
+!#*********************************************************************************************
+!#***  Device: U00-RR-01 (Cisco 8500 Series Routers)
+!#*********************************************************************************************
+!#***  Purpose: This template is used to configure the solution baseline of the uWAN
+!#              Route Reflector (U00-RR-01).
+!#
+!#
+!#***  TEMPLATE NAME: [UWAN_U00-RR-01_SBASE]
+!#
+!#     Ensure the text file naming format matches the template name to allow other
+!#     templates to reference this one.
+!#
+!#*********************************************************************************************
+!#***  Steps for Config Generation (erase this section when completed)
+!#
+!# Copy the following templates from the Network Library System Installation and Configuration
+!# document and paste to the appropriate sections:
+!# 1. [ROUTER_BASELINE]
+!#    - Configure the HW baseline.
+!# 2. [COPP_BASELINE]
+!#    - Configure enterprise control plane policy.
+!# 3. [NON-SWITCHPORT_L3_BASELINE]
+!#    - Configure the non-switchport interface baseline for all device interfaces.
+!# 4. [VRF_DEFINITION]
+!#    - Configure the core VRF.
+!#    - Configure the management VRF.
+!# 5. [LOOPBACK_INTERFACE]
+!#    - Configure loopback10 interface.
+!# 6. [ROUTED_INTERFACE]
+!#    - Configure the ODMN interface.
+!# 7. [OSPF_BASELINE]
+!#    - Configure the OSPF baseline.
+!# 8. [OSPF_NETWORK]
+!#    - Configure the OSPF network statements.
+!# 9. [VRF_STATIC_ROUTE]
+!#    - Configure management VRF static route.
+!# 10. [ODMN_ACL]
+!#    - Configure the ODMN ACL.
+!#
+!#
+!# Useful Reference from the Network Library System Installation and Configuration document:
+!# 1. [DEVICE-MATRIX_README]
+!#    - For hardware specific interface numbering scheme.
+!# 2. [DESCRIPTION_README]
+!#    - For interface description guidance.
+!#
+!# NOTE:
+!# Follow all instructions in the individual sections below. The variables in a section
+!# only applies to that section and must not be re-used anywhere else in this template.
+!#
+!# Replace template variables within '<...>' brackets where: (include brackets in S&R)
+!#
+!# ---Variable--- --- Description / Example ------------------------------------------
+!# <VAR1>           = Static variable in "double quotes" or instructions
+!#
+!#*********************************************************************************************
+!
+!#*********************************************************************************************
+!# Copy and paste the [ROUTER_BASELINE] Template in this section.
+!# Instructions:
+!# - Configures baseline services for device.
+!#
+!#
+!# *** Delete all of the instructions in this section when finished ***
+!# *** PASTE TEMPLATE BELOW ***
+!
+!
+!
+!
+!# *** END OF SECTION ***
+!#*********************************************************************************************
+!
+!#*********************************************************************************************
+!# Copy and paste the [COPP_BASELINE] Template in this section.
+!# Instructions:
+!# - Configures enterprise control plane policy.
+!#
+!#
+!# *** Delete all of the instructions in this section when finished ***
+!# *** PASTE TEMPLATE BELOW ***
+!
+!
+!
+!
+!# *** END OF SECTION ***
+!#*********************************************************************************************
+!
+!#*********************************************************************************************
+!# Copy and paste the [NON-SWITCHPORT_L3_BASELINE] Template in this section.
+!# Instructions:
+!# - Configure interface baseline for all router interfaces associated
+!#   with device. Utilize [DEVICE-MATRIX_README] for HW specific interface guidance.
+!#
+!# *** Delete all of the instructions in this section when finished ***
+!# *** PASTE TEMPLATE BELOW ***
+!
+!
+!
+!
+!# *** END OF SECTION ***
+!#*********************************************************************************************
+!
+!#*********************************************************************************************
+!# Copy and paste the [VRF_DEFINITION] Template in this section.
+!# Instructions:
+!# - Configure the management VRF.
+!# - Delete the rd and route-target commands for this VRF.
+!#
+!# <VRF_NAME> = "Mgmt-intf"
+!# <DESC>     = "Dedicated management VRF"
+!#
+!#
+!# *** Delete all of the instructions in this section when finished ***
+!# *** PASTE TEMPLATE BELOW ***
+!
+!
+!
+!
+!# *** END OF SECTION ***
+!#*********************************************************************************************
+!
+!#*********************************************************************************************
+# Copy and paste the [LOOPBACK_INTERFACE] Template in this section.
+!# Instructions:
+!# - Configure the BGP loopback10 interface.
+!#
+!# <LOOP>           = "10"
+!# <DESCRIPTION>    = "BGP Loopback Peering for J-PE"
+!#
+!!# *** Delete all of the instructions in this section when finished ***
+!# *** PASTE TEMPLATE BELOW ***
+!
+!
+!
+!
+!# *** END OF SECTION ***
+!#*********************************************************************************************
+!
+!#*********************************************************************************************
+!# Copy and paste the [ROUTED_INTERFACE] Template in this section.
+!# Instructions:
+!# - Configure the connections to U00-OR-01 and 02.
+!# - Configure the ODMN VLAN 23 management connection.
+!#
+!#*** Configure the interfaces to U00-OR-01 and 02.
+!# <PHY-MTU>        =  "4386"
+!# <IP-MTU>         =  "4000"
+!#
+!#*** ODMN VLAN 23 management connection to IS03:
+!# - Use the dedicated mgmt physical interface.
+!# - Uncomment the VRF option for this interface.
+!#
+!# <VRF_NAME>     = "Mgmt-intf"
+!#
+!#
+!# *** PASTE TEMPLATE BELOW ***
+!
+!
+!
+!
+!# *** END OF SECTION ***
+!#*********************************************************************************************
+!
+!#*********************************************************************************************
+!# Copy and paste the [OSPF_BASELINE] Template in this section.
+!# Instructions:
+!# - Configure the OSPF baseline
+!#
+!# <PROCESS-ID>       = "2002"
+!# <AREA-ID>          = "0"
+!# <KEY-CHAIN>        = "KC_OSPF_NMCI"
+!#
+!#
+!# *** Delete all of the instructions in this section when finished ***
+!# *** PASTE TEMPLATE BELOW ***
+!
+!
+!
+!
+!# *** END OF SECTION ***
+!#*********************************************************************************************
+!
+!#*********************************************************************************************
+!# Copy and paste the [OSPF_NETWORK] Template in this section.
+!# Instructions:
+!# - Configure OSPF network parameters:
+!# <PROCESS-ID>       = "2002"
+!# <KEY-CHAIN>        = "KC_OSPF_NMCI"
+!#
+!# - Configure OSPF network statements for:
+!#   - Loopback10 network in area 0
+!#   - Routed interface to OR1 and OR2 in area 0
+!# - Uncomment and configure OSPF adjacencies for:
+!#   - OR01 and 02 interfaces
+!#
+!#
+!# *** Delete all of the instructions in this section when finished ***
+!# *** PASTE TEMPLATE BELOW ***
+!
+!
+!
+!
+!# *** END OF SECTION ***
+!#*********************************************************************************************
+!
+!#*********************************************************************************************
+!# Copy and paste the [VRF_STATIC_ROUTE] Template in this section.
+!# Instructions:
+!# - Configure the ODMN VRF static default route.
+!#
+!# <VRF_NAME>           = "Mgmt-intf"
+!# <DEST_NET>           = "172.16.0.0"
+!# <DEST_MASK>          = "255.240.0.0"
+!# <EXIT-INT>           = Delete this variable from the command.
+!# <NEXT-HOP-IP>        = VLAN 23 Gateway IP Address
+!# <STATIC-DESCRIPTION> = "ODMN_NETWORK"
+!#
+!#
+!# *** Delete all of the instructions in this section when finished ***
+!# *** PASTE TEMPLATE BELOW ***
+!
+!
+!
+!
+!# *** END OF SECTION ***
+!#*********************************************************************************************
+!
+!#*********************************************************************************************
+!# Copy and paste the [ODMN_ACL] Template in this section.
+!# Instructions:
+!# - Apply to the ODMN ACL to the management interface.
+!#
+!#
+!# *** Delete all of the instructions in this section when finished ***
+!# *** PASTE TEMPLATE BELOW ***
+!#
+!#
+!#
+!#
+!# *** END OF SECTION ***
+!#*********************************************************************************************
+!
+!
+!#*********************************************************************************************
+!# System Specific Configuration
+!# Instructions:
+!# - Configure the remaining system specific configurations.
+!#
+!#
+!# <SITE>               = Four letter site identifier for this device (NRFK, SDNI, PRLH).
+!# <RR_PEER_PASS>       = Password for iBGP peering with other RR's.
+!# <OR_PEER_PASS>       = Password for peering with OR's.
+!# <NRFK_RR_L10>        = NRFK-U00-RR-01 Loopback10 IP address.
+!# <SDNI_RR_L10>        = SDNI-U00-RR-01 Loopback10 IP address.
+!# <PRLH_RR_L10>        = PRLH-U00-RR-01 Loopback10 IP address.
+!# <OR01_L10_IP>        = IP address for local site OR01 Loopback10.
+!# <OR02_L10_IP>        = IP address for local site OR02 Loopback10.
+!# <REMOTE_OR01_L10>    = IP address for remote site OR01 Loopback10.
+!# <REM_SITE>           = Four letter site identifier for the remote site OR peer.
+!# <REMOTE_OR02_L10>    = IP address for remote site OR02 Loopback10.
+!# <L10_IP>             = This Route Reflector Loopback10 IP address.
+!# <L10_MASK>           = This Route Reflector Loopback10 Subnet Mask.
+!# <OR01_INT_IP>        = IP address on the interface to OR01.
+!# <OR01_INT_MASK>      = Subnet mask for interface to OR01.
+!# <OR02_INT_IP>        = IP address on the interface to OR02.
+!# <OR02_INT_MASK>      = Subnet mask for interface to OR02.
+!#
+!#*********************************************************************************************
+!
+!
+!begin
+!
+hostname <SITE>-U00-RR-01
+!
+router bgp 616
+ no synchronization
+ bgp log-neighbor-changes
+ no auto-summary
+ bgp cluster-id 111
+ no bgp default ipv4-unicast
+!
+!
+!#**************************************************************************
+!# Create BGP peer-group for all enterprise route reflectors
+!#**************************************************************************
+ neighbor RR-JPE peer-group
+ neighbor RR-JPE remote-as 616
+ neighbor RR-JPE password 7 <RR_PEER_PASS>
+ neighbor RR-JPE update-source Loopback10
+!
+!
+!#**************************************************************************
+!# Create BGP peer-group for all ORs in enterprise for JPE
+!#**************************************************************************
+!
+ neighbor outer-router-JPE peer-group
+ neighbor outer-router-JPE remote-as 616
+ neighbor outer-router-JPE transport path-mtu-discovery disable
+ neighbor outer-router-JPE password <OR_PEER_PASS>
+ neighbor outer-router-JPE update-source Loopback10
+!
+!#**************************************************************************
+!# RR peering. Uncomment the two remote peers
+!#**************************************************************************
+!
+! neighbor <NRFK_RR_L10> peer-group RR-JPE
+! neighbor <NRFK_RR_L10> description <== iBGP to NRFK_U00_RR01 ==>
+! neighbor <SDNI_RR_L10> peer-group RR-JPE
+! neighbor <SDNI_RR_L10> description <== iBGP to SDNI_U00_RR01 ==>
+! neighbor <PRLH_RR_L10> peer-group RR-JPE
+! neighbor <PRLH_RR_L10> description <== iBGP to PRLH_U00_RR01 ==>
+!
+!#**************************************************************************
+!# OR peering. Repeat for all remote site MPLS ORs
+!#**************************************************************************
+!
+ neighbor <OR01_L10_IP> peer-group outer-router-JPE
+ neighbor <OR01_L10_IP> description <== iBGP to <SITE>_U00_OR01 ==>
+ neighbor <OR02_L10_IP> peer-group outer-router-JPE
+ neighbor <OR02_L10_IP> description <== iBGP to <SITE>_U00_OR02 ==>
+!
+ neighbor <REMOTE_OR01_L10> peer-group outer-router-JPE
+ neighbor <REMOTE_OR01_L10> description <== iBGP to <REM_SITE>_U00_OR01 ==>
+ neighbor <REMOTE_OR02_L10> peer-group outer-router-JPE
+ neighbor <REMOTE_OR02_L10> description <== iBGP to <REM_SITE>_U00_OR02 ==>
+!
+!
+!#**************************************************************************
+!# Add networks statements to advertise routes to ORs
+!#**************************************************************************
+!
+ address-family ipv4
+  network <L10_IP> mask <L10_MASK>
+  network <OR01_INT_IP> mask <OR01_INT_MASK>
+  network <OR02_INT_IP> mask <OR02_INT_MASK>
+!
+!#**************************************************************************
+!# Activate peering with local site ORs
+****************************************************************************
+!
+  neighbor <OR01_L10_IP> activate
+  neighbor <OR02_L10_IP> activate
+ exit-address-family
+!
+ address-family vpnv4
+  neighbor RR-JPE send-community both
+  neighbor outer-router-JPE send-community both
+  neighbor outer-router-JPE route-reflector-client
+!
+!#**************************************************************************
+!# Activate RR peering. Uncomment the two remote peers
+!#**************************************************************************
+!
+! neighbor <NRFK_RR_L10> activate
+! neighbor <SDNI_RR_L10> activate
+! neighbor <PRLH_RR_L10> activate
+!
+!#**************************************************************************
+!# Activate OR peering. Repeat for all remote site MPLS ORs
+!#**************************************************************************
+!
+  neighbor <OR01_L10_IP> activate
+  neighbor <OR02_L10_IP> activate
+!
+  neighbor <REMOTE_OR01_L10> activate
+  neighbor <REMOTE_OR02_L10> activate
+!
+ exit-address-family
+!
+!
+alias exec RR_SBASE UWAN_U00-RR-01_SBASE_v1.0.0
+!
+end
+!
+write memory

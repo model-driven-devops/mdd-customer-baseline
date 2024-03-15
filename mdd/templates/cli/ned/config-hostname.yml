@@ -1,0 +1,3 @@
+mdd_data:
+  config:
+    tailf-ned-cisco-ios:hostname: mdd-router-test

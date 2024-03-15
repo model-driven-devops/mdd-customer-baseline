@@ -1,0 +1,45 @@
+!#*********************************************************************************************
+!#***  Type: LIBR Technology Baseline
+!#
+!#***  Version: 1.0.0
+!#     Adapted from: cNETHW OSPF_BASELINE_v1.0.0
+!#***  Project: SM0224
+!#***  Doc ID#: TMP511A.CMW00211523.01
+!#*********************************************************************************************
+!#***  Device: Cisco IOS or IOS-XE
+!#*********************************************************************************************
+!#***  Purpose: Use this script to apply OSPF STIG baseline commands.
+!#
+!#***  TEMPLATE NAME: [OSPF_BASELINE]
+!#
+!#     Ensure the text file naming format matches the template name to allow other
+!#     templates to reference this one.
+!#
+!#*********************************************************************************************
+!#***  Steps for Config Generation (erase this section when completed)
+!#
+!# Replace template variables within '<...>' brackets where: (include brackets in S&R)
+!#
+!# ---Variable---   --- Description / Example ------------------------------------------
+!# <PROCESS-ID>       = OSPF process ID (Normally = 1001)
+!# <AREA-ID>          = OSPF area ID.
+!# NOTE: Repeat the area authentication command if multiple areas require authentication.
+!#       See the system specific solution for guidance.
+!#
+!#*********************************************************************************************
+!
+configure terminal
+!
+ip routing
+!
+router ospf <PROCESS-ID>
+ log-adjacency-changes
+ area <AREA-ID> authentication message-digest
+ passive-interface default
+!
+alias exec LIBR_OSPF OSPF_BASELINE_v1.0.0
+!
+end
+!
+write memory
+!

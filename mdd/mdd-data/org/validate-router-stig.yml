@@ -3,6 +3,11 @@ mdd_tags:
   - stig
 mdd_schemas:
   - name: CISC-ND-000210
-    file: 'stig/router/CISC-ND-000210.schema.yml'
-  - name: CISC-ND-000720
-    file: 'stig/router/CISC-ND-000720.schema.yml'
+    key: config
+    file: 'stig/router/CISC-ND-000210.native.schema.json'
+  - name: CISC-ND-000250
+    key: config
+    file: 'stig/router/CISC-ND-000250.native.schema.json'
+  - name: CISC-ND-001210
+    key: config
+    file: 'stig/router/CISC-ND-001210.native.schema.json'

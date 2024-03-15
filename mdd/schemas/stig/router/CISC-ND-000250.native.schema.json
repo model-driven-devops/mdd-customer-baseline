@@ -1,0 +1,47 @@
+{
+  "title": "CISC-ND-000250 Schema",
+  "description": "CISC-ND-000250",
+	"metadata": {
+		"finding_id": "V-215671",
+		"rule_id": "SV-215671r521266_rule",
+		"version": "CISC-ND-000250",
+		"severity": "medium",
+		"date": "2020-09-23"
+	},
+  "type": "object",
+  "properties": {
+    "tailf-ned-cisco-ios:login": {
+      "type": "object",
+      "properties": {
+        "on-failure": {
+          "type": "object",
+          "properties": {
+            "log": {
+              "type": "array",
+              "items": {
+								"type": ["null", "object"],
+								"additionalProperties": true
+              }
+            }
+          },
+          "required": ["log"]
+        },
+        "on-success": {
+          "type": "object",
+          "properties": {
+            "log": {
+              "type": "array",
+              "items": {
+								"type": ["null", "object"],
+								"additionalProperties": true
+              }
+            }
+          },
+          "required": ["log"]
+        }
+      },
+      "required": ["on-failure", "on-success"]
+    }
+  },
+  "required": ["tailf-ned-cisco-ios:login"]
+}

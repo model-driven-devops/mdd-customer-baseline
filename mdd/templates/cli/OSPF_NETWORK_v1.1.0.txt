@@ -1,0 +1,67 @@
+!#*********************************************************************************************
+!#***  Type: cNETHW Technology Baseline
+!#
+!#***  Version: 1.1.0
+!#     Adapted from: 1.0.0
+!#***  Project: SM1069
+!#***  Doc Name: cNETHW System Installation and Configuration
+!#*********************************************************************************************
+!#***  Device:  Cisco routers and switches running IOS or IOS-XE
+!#*********************************************************************************************
+!#***  Purpose: Use this script to enable OSPF on an interface and to advertise the network.
+!#
+!#***  TEMPLATE NAME: [OSPF_NETWORK]
+!#
+!#     Ensure the text file naming format matches the template name to allow other templates
+!#     to reference this one.
+!#
+!#*********************************************************************************************
+!#***  Steps for Config Generation (erase this section when completed)
+!#
+!# Replace template variables within '<...>' brackets where:
+!#         (include brackets in S&R)
+!#
+!# ---Variable---   --- Description / Example ------------------------------------------
+!#
+!# <PROCESS-ID>       = OSPF process ID (Normally = 1001)
+!# <NETWORK-ID>       = Network ID of the interface/SVI to add into OSPF
+!# <INVERSE-MASK>     = Inverse mask of the Network ID
+!# <AREA-ID>          = OSPF area ID
+!# <IFACE-NAME>       = Interface where the <NETWORK-ID> is directly connected and will be used
+!#                      to peer with another router. Reference the [DEVICE-MATRIX_README]
+!# <KEY-CHAIN>        = Key chain name.
+!# <OSPF_KEY>         = Enterprise OSPF password. Uncomment if this interface will be used
+!#                      to form OSPF adjacencies.
+!#
+!# NOTE: Only uncomment one authentication option under the interface when configuring
+!#       adjacencies. The key-chain option is the preferred option. If all neighbors on a
+!#       segment (interface, VLAN, Tunnel, etc.) do not support the key-chain option, use the
+!#       message-digest-key option for all neighbors. Configuration of the key-chain occurs
+!#       with the [OSPF_BASELINE] template. Ensure that the key-chain is already on the device
+!#       or configure the key-chain during the usage of this template.
+!#
+!#*********************************************************************************************
+!
+configure terminal
+!
+router ospf <PROCESS-ID>
+ network <NETWORK-ID> <INVERSE-MASK> area <AREA-ID>
+!
+!*****   BEGIN - statements for enabling OSPF adjacencies ****************************
+!*****           Remove precautionary ! to enable these commands *********************
+!*****           Delete this section if commands not used ****************************
+!
+! no passive-interface <IFACE-NAME>
+!
+!interface <IFACE-NAME>
+! ip ospf authentication key-chain <KEY-CHAIN>
+! ip ospf message-digest-key 1 md5 <OSPF_KEY>
+!
+!*****   END - statements for enabling OSPF adjacencies ******************************
+!
+alias exec cNETHW_OSPF_NET Cisco_OSPF_Network_v1.1.0
+!
+end
+!
+write memory
+!

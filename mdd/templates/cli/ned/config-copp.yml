@@ -1,0 +1,106 @@
+{% set template_info = {
+  'version': '1.1.0',
+  'adapted_from': 'COPP_BASELINE_v1.0.0',
+  'project': 'SM0224',
+  'doc_id': 'TMP511A.CMW00211523.01',
+  'template_name': 'COPP_BASELINE'
+} %}
+mdd_tags:
+  - copp
+mdd_data:
+  config:
+    tailf-ned-cisco-ios:ip:
+{% if config_vars.access_lists.extended is defined %}
+      access-list:
+        extended:
+          ext-named-acl:
+{% for ext_acl in config_vars.access_lists.extended %}
+            - name: {{ ext_acl.name }}
+              ext-access-list-rule:
+{% for rule in ext_acl.rules %} 
+                - rule: {{ rule }}
+{% endfor %}
+{% endfor %}
+{% endif %}
+
+{% if config_vars.class_map is defined %}
+    tailf-ned-cisco-ios:class-map:
+{% for cm in config_vars.class_map %}
+    - name: "{{ cm.name }}"
+      prematch: "{{ cm.prematch }}"
+      match:
+{% if cm.access_group is defined %}
+        access-group:
+          name:
+{% for group in cm.access_group %}
+          - "{{ group }}"
+{% endfor %}
+{% endif %}
+{% if cm.protocol_list is defined and cm.protocol_list.name is defined %}
+        protocol:
+          protocol-list:
+{% for protocol in cm.protocol_list.name %}
+          - name: "{{ protocol }}"
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if config_vars.policy_map is defined %}
+    tailf-ned-cisco-ios:policy-map:
+{% for pm in config_vars.policy_map %}
+    - name: "{{ pm.name }}"
+      class:
+{% for cl in pm.class %}
+      - name: "{{ cl.name }}"
+{% if cl.police_policy_map is defined %}
+        police-policy-map:
+          police:
+            cir: "{{ cl.police_policy_map.police.cir }}"
+            actions:
+{% if cl.police_policy_map.police.actions.conform_transmit is defined %}
+              conform-transmit:
+                conform-action:
+                  transmit:
+                  - null
+{% endif %}
+{% if cl.police_policy_map.police.actions.exceed_transmit is defined %}
+              exceed-transmit:
+                exceed-action:
+                  transmit:
+                  - null
+{% endif %}
+{% if cl.police_policy_map.police.actions.exceed_drop is defined %}
+              exceed-drop:
+                exceed-action:
+                  drop:
+                  - null
+{% endif %}
+{% endif %}
+{% if cl.police_rate_unit is defined %}
+        police-rate-unit:
+          police:
+            rate:
+              units: "{{ cl.police_rate_unit.police.rate.units }}"
+              xps: "{{ cl.police_rate_unit.police.rate.xps }}"
+              actions:
+{% if cl.police_rate_unit.police.actions.conform_drop is defined %}
+                conform-drop:
+                  conform-action:
+                    drop:
+                    - null
+{% endif %}
+{% if cl.police_rate_unit.police.actions.exceed_drop is defined %}
+                exceed-drop:
+                  exceed-action:
+                    drop:
+                    - null
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+{% endif %}
+    tailf-ned-cisco-ios:alias:
+      - mode: exec
+        name: LIBR-COPP
+        line: COPP_BASELINE_v1.1.0

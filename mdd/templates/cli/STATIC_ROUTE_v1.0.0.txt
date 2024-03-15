@@ -1,0 +1,49 @@
+!#*********************************************************************************************
+!#***  Type: LIBR Technology Baseline
+!#
+!#***  Version: 1.0.0
+!#     Adapted from: cNETHW STATIC_ROUTE_v1.0.0
+!#***  Project: SM0224
+!#***  Doc ID#: TMP511A.CMW00211523.01
+!#*********************************************************************************************
+!#***  Device:  Cisco routers and switches running IOS or IOS-XE
+!#*********************************************************************************************
+!#***  Purpose: Use this script to configure a static route.
+!#
+!#     TEMPLATE NAME: [STATIC_ROUTE]
+!#
+!#     Ensure the text file naming format matches the template name to allow other
+!#     templates to reference this one.
+!#
+!#*********************************************************************************************
+!#***  Steps for Config Generation (erase this section when completed)   
+!#
+!# Replace template variables within '<...>' brackets where: (include brackets in S&R)
+!#
+!# ---Variable---     --- Description / Example ------------------------------------------
+!#
+!# <DEST_NET>           = Destination Network.
+!# <DEST_MASK>          = Subnet mask of the IP address or address space assigned to the
+!#                        remote network.
+!# <NEXT-HOP-IP>        = Next HOP IP address
+!# <STATIC-DESCRIPTION> = Descriptive name for the static route.
+!#
+!#*********************************************************************************************
+!
+!
+configure terminal
+! 
+ip routing
+!
+ip route <DEST_NET> <DEST_MASK> <NEXT-HOP-IP> name <STATIC-DESCRIPTION>
+!
+!# Uncomment this floating static route to black hole the traffic in case the route to 
+!# the <NEXT-HOP-IP> is lost. See system specific solution for guidance.
+!ip route <DEST_NET> <DEST_MASK> NULL0 254 name SAFE_GUARD
+!
+alias exec LIBR_IPROUTE STATIC_ROUTE_v1.0.0
+!
+end
+!
+write memory
+!

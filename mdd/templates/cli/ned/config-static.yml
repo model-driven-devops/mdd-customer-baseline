@@ -1,0 +1,31 @@
+{% set template_info = {
+  'version': '1.0.0',
+  'adapted_from': 'cNETHW STATIC_ROUTE_v1.0.0',
+  'project': 'SM0224',
+  'doc_id': 'TMP511A.CMW00211523.01'
+} %}
+mdd_data:
+  config:
+    tailf-ned-cisco-ios:ip:
+{% if config_vars.ip.route is defined %}
+      route:
+{% for route in config_vars.ip.route %}
+{% if route.forwarding_address is defined and route.interface is not defined %}
+        ip-route-forwarding-list:
+          - prefix: {{ route.prefix }}
+            mask: {{ route.mask }}
+            forwarding-address: {{ route.forwarding_address }}
+            name: {{ route.name }}
+{% elif route.interface is defined %}
+        ip-route-interface-forwarding-list:
+          - prefix: {{ route.prefix }}
+            mask: {{ route.mask }}
+            interface: {{ route.interface }}
+            forwarding-address: {{ route.forwarding_address }}
+{% endif %}
+{% endfor %}
+    tailf-ned-cisco-ios:alias:
+    - mode: exec
+      name: LIBR_IPROUTE
+      line: STATIC_ROUTE_v1.0.0
+{% endif %}

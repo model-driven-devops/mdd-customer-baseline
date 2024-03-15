@@ -145,3 +145,196 @@ Now you want to re-harvest.
 ```
 ansible-playbook ciscops.mdd.harvest
 ```
+
+Now you can find your data in your config. This is what you need to turn into Jinja.
+
+```
+    tailf-ned-cisco-ios:router:
+      ospf:
+      - id: 100
+        area:
+        - id: 10
+          authentication:
+            message-digest:
+            - null
+        passive-interface:
+          default:
+          - null
+```
+
+## Start your template
+
+In your device directory, start a new file for your template. It should start with "config". In this example use config-ospf.yml.
+
+Notes:
+- Currently MDD needs the templates to be under mdd-data.
+- MDD natively parses Jinja so you do not need to name your file .j2
+
+Start your template by setting the template info. This acts as Meta-data that can be used for searching later (or so the internet tells me). All native configs must start with mdd_data followed by config as seen in the example.
+
+```
+{% set template_info = {
+  'version': '',
+  'adapted_from': '',
+  'project': '',
+  'doc_id': '',
+  'template_name': ''
+} %}
+mdd_data:
+  config:
+```
+
+cut or comment the config out of the config-data.yml file and paste it into your template:
+
+```
+{% set template_info = {
+  'version': '',
+  'adapted_from': '',
+  'project': '',
+  'doc_id': '',
+  'template_name': ''
+} %}
+mdd_data:
+  config:
+    tailf-ned-cisco-ios:router:
+      ospf:
+      - id: 100
+        area:
+        - id: 10
+          authentication:
+            message-digest:
+            - null
+        passive-interface:
+          default:
+          - null
+```
+
+## Add your key pairs to inventory
+
+Navigate to your network.yml file and find your device. Now we want to extract the key pairs and place them in your ansible inventory until we find a better home for them. add the key "config_vars" to your device.
+
+```
+children:
+    network:
+      children:
+        routers:
+          hosts:
+            mdd-router:
+              ansible_host: <ip address>
+              config_vars:
+```
+
+You can structure your variables however you want, but know that as these get more complex, you may have to change them later, using multiple layers and lists.
+
+```
+children:
+    network:
+      children:
+        routers:
+          hosts:
+            mdd-router:
+              ansible_host: <ip address>
+              config_vars:
+                router:
+                  ospf:
+                    - process_id: 100
+                      area_id: 10
+                    - process_id: 110
+                      area_id: 20
+```
+
+## Create your Jinja
+
+Add your if statements to look at whether your config vars exists.
+```
+{% set template_info = {
+  'version': '',
+  'adapted_from': '',
+  'project': '',
+  'doc_id': '',
+  'template_name': ''
+} %}
+mdd_data:
+  config:
+{% if config_vars.router is defined %}
+    tailf-ned-cisco-ios:router:
+{% if config_vars.router.ospf is defined %}
+      ospf:
+      - id: 100
+        area:
+        - id: 10
+          authentication:
+            message-digest:
+            - null
+        passive-interface:
+          default:
+          - null
+{% endif %}
+{% endif %}
+```
+
+Now loop through your list under config_vars and replace your key pairs with variables.
+
+```
+{% set template_info = {
+  'version': '',
+  'adapted_from': '',
+  'project': '',
+  'doc_id': '',
+  'template_name': ''
+} %}
+mdd_data:
+  config:
+{% if config_vars.router is defined %}
+    tailf-ned-cisco-ios:router:
+{% if config_vars.router.ospf is defined %}
+{% for ospf in config_vars.router.ospf %}
+      ospf:
+      - id: {{ ospf.process_id }}
+        area:
+        - id: {{ ospf.area_id }}
+          authentication:
+            message-digest:
+            - null
+        passive-interface:
+          default:
+          - null
+{% endfor %}
+{% endif %}
+{% endif %}
+```
+
+Each template also includes an alias. Add the alias.
+
+```
+{% set template_info = {
+  'version': '',
+  'adapted_from': '',
+  'project': '',
+  'doc_id': '',
+  'template_name': ''
+} %}
+mdd_data:
+  config:
+{% if config_vars.router is defined %}
+    tailf-ned-cisco-ios:router:
+{% if config_vars.router.ospf is defined %}
+{% for ospf in config_vars.router.ospf %}
+      ospf:
+      - id: {{ ospf.process_id }}
+        area:
+        - id: {{ ospf.area_id }}
+          authentication:
+            message-digest:
+            - null
+        passive-interface:
+          default:
+          - null
+{% endfor %}
+{% endif %}
+   tailf-ned-cisco-ios:alias:
+      - mode: exec
+        name: 
+        line: Cisco_OSPF_Network_v
+{% endif %}
+```

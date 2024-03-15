@@ -338,3 +338,68 @@ mdd_data:
         line: Cisco_OSPF_Network_v
 {% endif %}
 ```
+
+## Test your template
+
+Make sure you removed the OSPF config from your config-data.yml otherwise you will get conflicts. To test, you should have your config-ospf.yml in your device directory.
+
+Use the following playbook, which sends the data to NSO using a dry-run.
+
+```
+ansible-playbook ciscops.mdd.nso_update_data -vvvv
+```
+
+If your template works, you should see the correct data in the NSO output:
+
+```
+ "tailf-ned-cisco-ios:router": {
+                        "ospf": [
+                            {
+                                "id": 1001,
+                                "network": [
+                                    {
+                                        "area": 0,
+                                        "ip": "",
+                                        "mask": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "area": [
+                                    {
+                                        "authentication": {
+                                            "message-digest": [
+                                                null
+                                            ]
+                                        },
+                                        "id": 10
+                                    }
+                                ],
+                                "id": 100,
+                                "passive-interface": {
+                                    "default": [
+                                        null
+                                    ]
+                                }
+                            },
+                            {
+                                "area": [
+                                    {
+                                        "authentication": {
+                                            "message-digest": [
+                                                null
+                                            ]
+                                        },
+                                        "id": 20
+                                    }
+                                ],
+                                "id": 110,
+                                "passive-interface": {
+                                    "default": [
+                                        null
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+```

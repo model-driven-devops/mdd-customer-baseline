@@ -90,3 +90,58 @@ Copy the following templates from the Network Library System Installation and Co
 !# 9. [VRF_STATIC_ROUTE]
 !#    - Configure management VRF static route.
 ```
+
+These should all be in the Network Library. Select which template you want to start with. For this example I will select "OSPF BASELINE". In your MDD directory, it helps to create a template directory and move the CLI templates as you work on them. 
+
+The OSPF template baseline shows you the CLI command and Key Value pairs required for this config.
+
+```
+configure terminal
+!
+ip routing
+!
+router ospf <PROCESS-ID>
+ log-adjacency-changes
+ area <AREA-ID> authentication message-digest
+ passive-interface default
+!
+alias exec LIBR_OSPF OSPF_BASELINE_v1.0.0
+!
+end
+!
+write memory
+!
+```
+
+Go ahead and login to your test device and input the config using arbitraty key value pairs. For example I used the following:
+
+```
+configure terminal
+!
+ip routing
+!
+router ospf 100
+ log-adjacency-changes
+ area 101 authentication message-digest
+ passive-interface default
+!
+alias exec LIBR_OSPF OSPF_BASELINE_v1.0.0
+!
+end
+!
+write memory
+!
+```
+
+## Sync and Re-harvest
+
+One you save your config on the device, you need to re-sync to NSO.
+
+```
+ansible-playbook ciscops.mdd.nso_sync_from
+```
+Now you want to re-harvest.
+
+```
+ansible-playbook ciscops.mdd.harvest
+```

@@ -2,8 +2,8 @@ import csv
 import requests
 
 # Nautobot details
-NAUTOBOT_URL = 'https://52.61.163.54/api'
-NAUTOBOT_TOKEN = 'dd32b8fef7619a96fc487ab22811a859814b9f0e'
+NAUTOBOT_URL =
+NAUTOBOT_TOKEN = 
 HEADERS = {
     'Authorization': f'Token {NAUTOBOT_TOKEN}',
     'Content-Type': 'application/json',

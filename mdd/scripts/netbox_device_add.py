@@ -39,7 +39,7 @@ def update_device(platform_data, device_type_id, headers, netbox_url):
     """
     Updates an existing device in NetBox with the device type based on NSO platform data.
     """
-    device_name = "NRFK-U02-AS-51"
+    device_name = ""
     serial_number = platform_data["tailf-ncs:platform"]["serial-number"]
     # Attempt to find the device in NetBox
     search_response = requests.get(f"{netbox_url}/api/dcim/devices/?name={device_name}", headers=headers, verify=False)
@@ -58,14 +58,14 @@ def update_device(platform_data, device_type_id, headers, netbox_url):
         print(f"Device {device_name} does not exist. Skipping.")
 
 # Setup for NetBox and NSO
-netbox_url = "https://netbox.cisco.development.smit-th.com:30002"
-netbox_token = "e0fc166151fa227155ac6f94fd02841b8a1b12dd"
+netbox_url = 
+netbox_token =
 headers = {"Authorization": f"Token {netbox_token}", "Content-Type": "application/json", "Accept": "application/json"}
-nso_url = "https://nso-prod.cisco.development.smit-th.com:30002/restconf"
-nso_username = "admin"
-nso_password = "aiTh7ush"
-device_name = "NRFK-U02-AS-51"
-platform_url = f"{nso_url}/data/tailf-ncs:devices/device={device_name}/platform"
+nso_url =
+nso_username = 
+nso_password =
+device_name = 
+platform_url = 
 
 # Make the GET request to retrieve the platform information
 response = requests.get(platform_url, auth=(nso_username, nso_password), headers={"Accept": "application/yang-data+json"}, verify=False)

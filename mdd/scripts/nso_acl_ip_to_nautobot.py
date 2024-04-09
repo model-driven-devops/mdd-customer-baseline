@@ -6,11 +6,11 @@ import json
 import urllib3
 
 # Environment variables
-NSO_URL = os.getenv('NSO_URL', 'https://nso.cisco.development.smit-th.com:30002')
-NSO_USERNAME = os.getenv('NSO_USERNAME', 'admin')
-NSO_PASSWORD = os.getenv('NSO_PASSWORD', 'admin')
-NAUTOBOT_URL = os.getenv('NAUTOBOT_URL', 'https://52.61.163.54/api')
-NAUTOBOT_TOKEN = os.getenv('NAUTOBOT_TOKEN', 'dd32b8fef7619a96fc487ab22811a859814b9f0e')
+NSO_URL = os.getenv('NSO_URL')
+NSO_USERNAME = os.getenv('NSO_USERNAME')
+NSO_PASSWORD = os.getenv('NSO_PASSWORD')
+NAUTOBOT_URL = os.getenv('NAUTOBOT_URL')
+NAUTOBOT_TOKEN = os.getenv('NAUTOBOT_TOKEN')
 
 # Disable SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)

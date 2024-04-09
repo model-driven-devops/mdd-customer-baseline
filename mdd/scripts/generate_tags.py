@@ -3,19 +3,20 @@ import requests
 import yaml
 import json
 
-def fetch_netbox_devices():
-    netbox_api_url = os.environ.get('NETBOX_API')
-    netbox_api_token = os.environ.get('NETBOX_TOKEN')
+NETBOX_URL = os.environ.get("NETBOX_URL") # was NETBOX_URL
+NETBOX_TOKEN = os.environ.get("NETBOX_TOKEN")
 
-    if not netbox_api_url or not netbox_api_token:
-        print("NETBOX_API or NETBOX_TOKEN environment variables are not set.")
-        exit(1)
+if not NETBOX_URL or not NETBOX_TOKEN:
+    print("NETBOX_API or NETBOX_TOKEN environment variables are not set.")
+    exit(1)
 
-    headers = {'Authorization': f'Token {netbox_api_token}', 'Accept': 'application/json'}
-    verify_ssl = False
+headers = {'Authorization': f'Token {NETBOX_TOKEN}', 'Accept': 'application/json'}
+verify_ssl = False
 
-    # Initialize the inventory structure with vars for sites
-    inventory_data = {
+def get_inventory_structure():
+    """Returns the default inventory structure"""
+
+    return {
         'all': {
             'vars': {
                 'sites': []
@@ -28,36 +29,40 @@ def fetch_netbox_devices():
         }
     }
 
-    # Fetch devices from NetBox
-    response = requests.get(f'{netbox_api_url}/api/dcim/sites/?limit=1000', headers=headers, verify=verify_ssl)
-    if response.status_code == 200:
-        sites_data = response.json()
-        # Populate the sites list
-        for site in sites_data['results']:
-            inventory_data['all']['vars']['sites'].append(site['name'])
+def fetch_netbox_devices():
+    # Initialize the inventory structure with vars for sites
+    inventory_data = get_inventory_structure()
 
-    response = requests.get(f'{netbox_api_url}/api/dcim/devices/?limit=1000', headers=headers, verify=verify_ssl)
-    if response.status_code == 200:
-        device_data = response.json()
+    # Fetch sites from NetBox
+    response = requests.get(f'{NETBOX_URL}/api/dcim/sites/?limit=1000', headers=headers, verify=verify_ssl)
 
-        for device in device_data['results']:
-            device_name = device['name']
-            site_name = device.get('site', {}).get('name', 'undefined')
-            device_tags = [tag['name'] for tag in device.get('tags', [])]
-
-            if site_name not in inventory_data['all']['children']['org']['children']:
-                inventory_data['all']['children']['org']['children'][site_name] = {'hosts': {}}
-
-            # Add the device under the site with its tags
-            inventory_data['all']['children']['org']['children'][site_name]['hosts'][device_name] = {'tags': device_tags}
-    else:
-        print(f"Failed to fetch data from NetBox: {response.status_code}")
+    if response.status_code != 200:
+        print(f"Failed to fetch sites from NetBox: {response.status_code}")
         exit(1)
+
+    # Populate the sites list
+    for site in response.json()['results']:
+        inventory_data['all']['vars']['sites'].append(site['name'])
+
+    # Fetch devices from NetBox
+    response = requests.get(f'{NETBOX_URL}/api/dcim/devices/?limit=1000', headers=headers, verify=verify_ssl)
+
+    if response.status_code != 200:
+        print(f"Failed to fetch devices from NetBox: {response.status_code}")
+        exit(1)
+
+    for device in response.json()['results']:
+        device_name = device['name']
+        site_name = device.get('site', {}).get('name', 'undefined')
+        device_tags = [tag['name'] for tag in device.get('tags', [])]
+
+        # Add the device under the site with its tags
+        inventory_data['all']['children']['org']['children'].setdefault(site_name, {}).setdefault('hosts', {}).setdefault(device_name, {})['tags'] = device_tags
 
     return inventory_data
 
 def write_inventory_file(inventory_data):
-    inventory_file_path = os.path.join(os.path.dirname(__file__),'..', 'inventory', 'tags.yml')
+    inventory_file_path = os.path.join(os.path.dirname(__file__), '..', 'inventory', 'tags.yml')
 
     with open(inventory_file_path, 'w') as f:
         yaml.dump(inventory_data, f, default_flow_style=False, sort_keys=False)

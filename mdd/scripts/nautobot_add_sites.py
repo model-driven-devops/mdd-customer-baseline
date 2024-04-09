@@ -1,9 +1,10 @@
 import csv
 import requests
+import os
 
 # Nautobot details
-NAUTOBOT_URL =
-NAUTOBOT_TOKEN = 
+NAUTOBOT_URL = os.environ.get("NAUTOBOT_URL")
+NAUTOBOT_TOKEN = os.environ.get("NAUTOBOT_TOKEN")
 HEADERS = {
     'Authorization': f'Token {NAUTOBOT_TOKEN}',
     'Content-Type': 'application/json',
@@ -16,6 +17,7 @@ requests.packages.urllib3.disable_warnings()
 def create_site(site):
     url = f"{NAUTOBOT_URL}/dcim/sites/"
     response = requests.post(url, headers=HEADERS, json=site, verify=False)
+
     if response.status_code == 201:
         print(f"Site '{site['name']}' created successfully.")
     else:
@@ -24,21 +26,24 @@ def create_site(site):
 def create_device(device):
     url = f"{NAUTOBOT_URL}/dcim/devices/"
     response = requests.post(url, headers=HEADERS, json=device, verify=False)
+
     if response.status_code == 201:
         print(f"Device '{device['name']}' created successfully.")
         return response.json()['id']  # Return device ID for further use
-    else:
-        print(f"Failed to create device '{device['name']}': {response.text}")
+
+    print(f"Failed to create device '{device['name']}': {response.text}")
 
 def create_interface(device_id, interface):
     url = f"{NAUTOBOT_URL}/dcim/interfaces/"
     interface['device'] = device_id
+
     response = requests.post(url, headers=HEADERS, json=interface, verify=False)
+
     if response.status_code == 201:
         print(f"Interface '{interface['name']}' created successfully.")
         return response.json()['id']
-    else:
-        print(f"Failed to create interface '{interface['name']}': {response.text}")
+
+    print(f"Failed to create interface '{interface['name']}': {response.text}")
 
 def assign_ip_to_interface(interface_id, ip):
     url = f"{NAUTOBOT_URL}/ipam/ip-addresses/"
@@ -47,7 +52,9 @@ def assign_ip_to_interface(interface_id, ip):
         "assigned_object_type": "dcim.interface",
         "assigned_object_id": interface_id
     }
+
     response = requests.post(url, headers=HEADERS, json=ip_data, verify=False)
+
     if response.status_code == 201:
         print(f"IP Address '{ip}' assigned successfully.")
     else:

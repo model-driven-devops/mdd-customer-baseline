@@ -29,6 +29,7 @@ nautobot_headers = {
 
 def fetch_nso_devices():
     """Fetches a list of devices from NSO."""
+
     url = f"{NSO_URL}/restconf/tailf/query"
     payload = {
         "tailf-rest-query:immediate-query": {
@@ -36,14 +37,17 @@ def fetch_nso_devices():
             "select": [{"label": "name", "expression": "name", "result-type": "string"}]
         }
     }
+
     response = requests.post(url, headers=nso_headers, json=payload, verify=False)
     devices = response.json().get("tailf-rest-query:query-result", {}).get("result", [])
     return [device["select"][0]["value"] for device in devices]
 
 def get_acl_for_device(device_name):
     """Fetches ACLs for a specified device and processes them."""
+
     url = f"{NSO_URL}/restconf/data/tailf-ncs:devices/device={device_name}/config/tailf-ned-cisco-ios:access-list"
     response = requests.get(url, headers=nso_headers, verify=False)
+
     if response.status_code == 200:
         acl_data = response.json().get("tailf-ned-cisco-ios:access-list", {}).get("access-list", [])
         for acl in acl_data:
@@ -55,6 +59,7 @@ def get_acl_for_device(device_name):
 
 def process_acl_rule(rule_text):
     """Processes a single ACL rule, extracting IPs and pushing to Nautobot."""
+
     ip_pattern = re.compile(r'permit\s+(\d+\.\d+\.\d+\.\d+)(?:\s+(\d+\.\d+\.\d+\.\d+))?')
     match = ip_pattern.search(rule_text)
     if match:
@@ -69,12 +74,14 @@ def process_acl_rule(rule_text):
 
 def convert_to_cidr(mask):
     """Converts a subnet mask to CIDR notation."""
+
     return sum([bin(int(x)).count('1') for x in mask.split('.')])
 
-def push_ip_to_nautobot(ip_address):
+def push_ip_to_nautobot(ip_address): # TODO: CHANGE DATA VARIABLE
     """Pushes an IP address to Nautobot."""
+
     url = f"{NAUTOBOT_URL}/ipam/ip-addresses/"
-    data = data = {
+    data = {
 			  "address": ip_address,
         "namespace": {
             "id": "fa8052af-7f81-4818-8eab-d7f08ed192a3",  # Example ID, replace with actual if different
@@ -85,10 +92,12 @@ def push_ip_to_nautobot(ip_address):
         "status": {
             "id": "cd5378a5-ed32-4f75-9e9e-980f4280e7c1",  # Example status ID, replace with actual if different
             "object_type": "app_label.modelname",  # Adjust as necessary
-            "url": "https://52.61.163.54/extras/statuses/cd5378a5-ed32-4f75-9e9e-980f4280e7c1"
+            "url": "https://IP/extras/statuses/cd5378a5-ed32-4f75-9e9e-980f4280e7c1"
         }
     }
+
     response = requests.post(url, headers=nautobot_headers, json=data, verify=False)
+
     if response.status_code in [200, 201]:
         print(f"IP {ip_address} pushed to Nautobot successfully.")
     else:

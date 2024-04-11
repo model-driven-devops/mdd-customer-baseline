@@ -1,16 +1,16 @@
 import os
 import requests
 import yaml
-import json
+import load_env_vars
 
-NETBOX_URL = os.environ.get("NETBOX_URL") # was NETBOX_URL
-NETBOX_TOKEN = os.environ.get("NETBOX_TOKEN")
+ENV_VARS = {
+    "NAUTOBOT_URL" : None,
+    "NAUTOBOT_TOKEN" : None
+}
 
-if not NETBOX_URL or not NETBOX_TOKEN:
-    print("NETBOX_API or NETBOX_TOKEN environment variables are not set.")
-    exit(1)
+ENV_VARS = load_env_vars.load_env_vars(os.environ, ENV_VARS)
 
-headers = {'Authorization': f'Token {NETBOX_TOKEN}', 'Accept': 'application/json'}
+headers = {'Authorization': f'Token {ENV_VARS['NAUTOBOT_TOKEN']}', 'Accept': 'application/json'}
 verify_ssl = False
 
 def get_inventory_structure():
@@ -34,7 +34,7 @@ def fetch_netbox_devices():
     inventory_data = get_inventory_structure()
 
     # Fetch sites from NetBox
-    response = requests.get(f'{NETBOX_URL}/api/dcim/sites/?limit=1000', headers=headers, verify=verify_ssl)
+    response = requests.get(f'{ENV_VARS['NAUTOBOT_URL']}/api/dcim/sites/?limit=1000', headers=headers, verify=verify_ssl)
 
     if response.status_code != 200:
         print(f"Failed to fetch sites from NetBox: {response.status_code}")
@@ -45,7 +45,7 @@ def fetch_netbox_devices():
         inventory_data['all']['vars']['sites'].append(site['name'])
 
     # Fetch devices from NetBox
-    response = requests.get(f'{NETBOX_URL}/api/dcim/devices/?limit=1000', headers=headers, verify=verify_ssl)
+    response = requests.get(f'{ENV_VARS['NAUTOBOT_URL']}/api/dcim/devices/?limit=1000', headers=headers, verify=verify_ssl)
 
     if response.status_code != 200:
         print(f"Failed to fetch devices from NetBox: {response.status_code}")

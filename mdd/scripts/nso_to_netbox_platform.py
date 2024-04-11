@@ -129,7 +129,8 @@ def update_netbox_device(device_id, platform_info):
         print(f"Failed to update device {device_id}: {response.status_code}, {response.text}")
 
 def main():
-    netbox=netbox_helper(NETBOX_URL,netbox_headers)
+    netbox=netbox_helper(NETBOX_URL,
+                         netbox_headers)
     for device in netbox.fetch_netbox_devices():
         device_name = device.get('name')
         platform_info = fetch_nso_platform_info(device_name)

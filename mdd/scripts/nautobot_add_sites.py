@@ -1,21 +1,26 @@
 import csv
 import requests
+import load_env_vars as load_env_vars
 import os
-
-# Nautobot details
-NAUTOBOT_URL = os.environ.get("NAUTOBOT_URL")
-NAUTOBOT_TOKEN = os.environ.get("NAUTOBOT_TOKEN")
-HEADERS = {
-    'Authorization': f'Token {NAUTOBOT_TOKEN}',
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-}
 
 # Disable SSL Warnings (for self-signed certificates)
 requests.packages.urllib3.disable_warnings()
 
+ENV_VARS = {
+    "NAUTOBOT_URL" : None,
+    "NAUTOBOT_TOKEN" : None
+}
+
+ENV_VARS = load_env_vars.load_env_vars(os.environ, ENV_VARS)
+
+HEADERS = {
+    'Authorization': f'Token {ENV_VARS['NAUTOBOT_TOKEN']}',
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+}
+
 def create_site(site):
-    url = f"{NAUTOBOT_URL}/dcim/sites/"
+    url = f"{ENV_VARS['NAUTOBOT_URL']}/dcim/sites/"
     response = requests.post(url, headers=HEADERS, json=site, verify=False)
 
     if response.status_code == 201:
@@ -24,7 +29,7 @@ def create_site(site):
         print(f"Failed to create site '{site['name']}': {response.text}")
 
 def create_device(device):
-    url = f"{NAUTOBOT_URL}/dcim/devices/"
+    url = f"{ENV_VARS['NAUTOBOT_URL']}/dcim/devices/"
     response = requests.post(url, headers=HEADERS, json=device, verify=False)
 
     if response.status_code == 201:
@@ -34,7 +39,7 @@ def create_device(device):
     print(f"Failed to create device '{device['name']}': {response.text}")
 
 def create_interface(device_id, interface):
-    url = f"{NAUTOBOT_URL}/dcim/interfaces/"
+    url = f"{ENV_VARS['NAUTOBOT_URL']}/dcim/interfaces/"
     interface['device'] = device_id
 
     response = requests.post(url, headers=HEADERS, json=interface, verify=False)
@@ -46,7 +51,7 @@ def create_interface(device_id, interface):
     print(f"Failed to create interface '{interface['name']}': {response.text}")
 
 def assign_ip_to_interface(interface_id, ip):
-    url = f"{NAUTOBOT_URL}/ipam/ip-addresses/"
+    url = f"{ENV_VARS['NAUTOBOT_URL']}/ipam/ip-addresses/"
     ip_data = {
         "address": ip,
         "assigned_object_type": "dcim.interface",

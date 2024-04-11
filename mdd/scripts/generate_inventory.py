@@ -1,15 +1,16 @@
 import os
 import requests
 import yaml
+import load_env_vars
 
-NETBOX_URL = os.environ.get('NETBOX_URL') # Was NETBOX_API
-NETBOX_TOKEN = os.environ.get('NETBOX_TOKEN')
+ENV_VARS = {
+    "NAUTOBOT_URL" : None,
+    "NAUTOBOT_TOKEN" : None
+}
 
-if not NETBOX_URL or not NETBOX_TOKEN:
-    print("Error: NETBOX_API or NETBOX_TOKEN environment variables are not set.")
-    exit(1)
+ENV_VARS = load_env_vars.load_env_vars(os.environ, ENV_VARS)
 
-headers = {'Authorization': f'Token {NETBOX_TOKEN}'}
+headers = {'Authorization': f'Token {ENV_VARS['NAUTOBOT_TOKEN']}'}
 verify_ssl = False
 existing_inventory_path = '/path/to/existing/inventory.yml'  # Replace with the actual path
 
@@ -30,7 +31,7 @@ def fetch_netbox_devices():
 
     # Make API requests to NetBox to retrieve device information
     response = requests.get(
-        f'{NETBOX_URL}/api/dcim/devices/',
+        f'{ENV_VARS['NAUTOBOT_URL']}/api/dcim/devices/',
         headers=headers,
         verify=verify_ssl  # Disable SSL certificate validation
     )
@@ -58,7 +59,7 @@ def fetch_netbox_devices():
 
         # Check if primary_ip4 exists and is not None
         primary_ip_data = device.get('primary_ip4')
-        if not primary_ip_data:
+        if not primary_ip_data: # Still need to create the role so that it shows up in the inventory file - because line 69 won't hit these cases
             inventory_data['all']['children']['network']['children'].setdefault(device_role, {}).setdefault('hosts', {}).setdefault(device_name, {})
             continue
 

@@ -6,17 +6,21 @@ import os
 import json
 import urllib3
 from netbox_class import netbox_helper
+import load_env_vars
 
-# Environment Variables
-NETBOX_URL = os.getenv('NETBOX_URL')
-NETBOX_TOKEN = os.getenv('NETBOX_TOKEN')
-NSO_URL = os.getenv('NSO_URL')
-NSO_USERNAME = os.getenv('NSO_USERNAME')
-NSO_PASSWORD = os.getenv('NSO_PASSWORD')
+ENV_VARS = {
+    "NSO_URL": None,
+    "NSO_USERNAME": None,
+    "NSO_PASSWORD": None,
+    "NETBOX_URL": None,
+    "NETBOX_TOKEN": None
+}
+
+ENV_VARS = load_env_vars.load_env_vars(os.environ, ENV_VARS)
 
 # Headers for NetBox
 netbox_headers = {
-    "Authorization": f"Token {NETBOX_TOKEN}",
+    "Authorization": f"Token {ENV_VARS["NETBOX_TOKEN"]}",
     "Content-Type": "application/json",
     "Accept": "application/json"
 }
@@ -52,7 +56,7 @@ def fetch_nso_platform_info(device_name):
 def get_or_create_platform(name, version):
     """Ensure the platform exists in NetBox, based on the combined name and version, and return its ID."""
     platform_identifier = f"{name} {version}"
-    url = f"{NETBOX_URL}/api/dcim/platforms/?name={platform_identifier}"
+    url = f"{ENV_VARS["NETBOX_URL"]}/api/dcim/platforms/?name={platform_identifier}"
     response = requests.get(url, headers=netbox_headers, verify=False)
 
     if response.status_code != 200:
@@ -68,7 +72,7 @@ def get_or_create_platform(name, version):
         "name": platform_identifier,
         "slug": platform_identifier.lower().replace(" ", "-").replace("(", "").replace(")", "").replace(".", "-")
     }
-    create_response = requests.post(f"{NETBOX_URL}/api/dcim/platforms/", headers=netbox_headers, data=json.dumps(data), verify=False)
+    create_response = requests.post(f"{ENV_VARS["NETBOX_URL"]}/api/dcim/platforms/", headers=netbox_headers, data=json.dumps(data), verify=False)
 
     if create_response.status_code not in [200, 201]:
         print(f"Failed to create platform {platform_identifier}: {create_response.text}")
@@ -80,7 +84,7 @@ def get_or_create_platform(name, version):
 def get_or_create_device_type(model):
     """Ensure the device type exists in NetBox, based on the model from NSO, and return its ID."""
 
-    url = f"{NETBOX_URL}/api/dcim/device-types/?model={model}"
+    url = f"{ENV_VARS["NETBOX_URL"]}/api/dcim/device-types/?model={model}"
     response = requests.get(url, headers=netbox_headers, verify=False)
 
     if response.status_code != 200 or response.json()['count'] > 0:
@@ -93,7 +97,7 @@ def get_or_create_device_type(model):
         "slug": model.lower().replace(" ", "-").replace("_", "-"),
         "manufacturer": 1  # Example manufacturer ID, adjust accordingly
     }
-    create_response = requests.post(f"{NETBOX_URL}/api/dcim/device-types/", headers=netbox_headers, data=json.dumps(data), verify=False)
+    create_response = requests.post(f"{ENV_VARS["NETBOX_URL"]}/api/dcim/device-types/", headers=netbox_headers, data=json.dumps(data), verify=False)
 
     if create_response.status_code not in [200, 201]:
         print(f"Failed to create device type {model}: {create_response.text}")
@@ -120,7 +124,7 @@ def update_netbox_device(device_id, platform_info):
         "device_type": device_type_id,
         "platform": platform_id
     }
-    url = f"{NETBOX_URL}/api/dcim/devices/{device_id}/"
+    url = f"{ENV_VARS["NETBOX_URL"]}/api/dcim/devices/{device_id}/"
     response = requests.patch(url, headers=netbox_headers, data=json.dumps(data), verify=False)
 
     if response.status_code in [200, 201, 204]:
@@ -129,7 +133,7 @@ def update_netbox_device(device_id, platform_info):
         print(f"Failed to update device {device_id}: {response.status_code}, {response.text}")
 
 def main():
-    netbox=netbox_helper(NETBOX_URL,
+    netbox=netbox_helper(ENV_VARS["NETBOX_URL"],
                          netbox_headers)
     for device in netbox.fetch_netbox_devices():
         device_name = device.get('name')

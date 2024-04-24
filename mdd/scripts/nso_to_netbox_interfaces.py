@@ -2,30 +2,34 @@ import requests
 import os
 import json
 import urllib3
-
-# Environment setup
-NETBOX_URL = os.getenv('NETBOX_URL')
-NETBOX_TOKEN = os.getenv('NETBOX_TOKEN')
-NSO_URL = os.getenv('NSO_URL')
-NSO_USERNAME = os.getenv('NSO_USERNAME')
-NSO_PASSWORD = os.getenv('NSO_PASSWORD')
-
-# NetBox headers for API requests
-netbox_headers = {
-    "Authorization": f"Token {NETBOX_TOKEN}",
-    "Content-Type": "application/json",
-    "Accept": "application/json"
-}
+import load_env_vars
 
 # Disable SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+ENV_VARS = {
+    "NSO_URL": None,
+    "NSO_USERNAME": None,
+    "NSO_PASSWORD": None,
+    "NETBOX_URL": None,
+    "NETBOX_TOKEN": None
+}
+
+ENV_VARS = load_env_vars.load_env_vars(os.environ, ENV_VARS)
+
+# NetBox headers for API requests
+netbox_headers = {
+    "Authorization": f"Token {ENV_VARS["NETBOX_TOKEN"]}",
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+}
 
 def get_netbox_devices():
     """Fetch all devices from NetBox."""
 
     print("Fetching devices from NetBox...")
 
-    url = f"{NETBOX_URL}/api/dcim/devices/"
+    url = f"{ENV_VARS["NETBOX_URL"]}/api/dcim/devices/"
     response = requests.get(url, headers=netbox_headers, verify=False)
 
     if response.status_code != 200:
@@ -40,8 +44,8 @@ def get_nso_interfaces(device_name):
 
     print(f"Fetching interfaces for {device_name} from NSO...")
 
-    url = f"{NSO_URL}/restconf/data/tailf-ncs:devices/device={device_name}/live-status/tailf-ned-cisco-ios-stats:interfaces"
-    response = requests.get(url, auth=(NSO_USERNAME, NSO_PASSWORD), headers={"Accept": "application/yang-data+json"}, verify=False)
+    url = f"{ENV_VARS['NSO_URL']}/restconf/data/tailf-ncs:devices/device={device_name}/live-status/tailf-ned-cisco-ios-stats:interfaces"
+    response = requests.get(url, auth=(ENV_VARS['NSO_USERNAME'], ENV_VARS['NSO_PASSWORD']), headers={"Accept": "application/yang-data+json"}, verify=False)
 
     if response.status_code != 200:
         print(f"Failed to fetch interfaces for {device_name} from NSO.")
@@ -54,12 +58,12 @@ def get_nso_interfaces(device_name):
 def type_translation(nso_type):
     """Translate NSO interface type to NetBox interface type."""
 
-    translation = {
+    translation_table = {
         "GigabitEthernet": "1000Base-T",
         "TenGigabitEthernet": "10GBase-T",
         "FastEthernet": "100Base-T"
     }
-    return translation.get(nso_type, "Other")  # Fallback to 'Other' if type not found
+    return translation_table.get(nso_type, "Other")  # Fallback to 'Other' if type not found
 
 def add_interface_to_device(device_id, interface):
     """Add an interface to a device in NetBox."""
@@ -74,7 +78,7 @@ def add_interface_to_device(device_id, interface):
         "mac_address": interface.get('mac-address', ''),
         # Additional fields as necessary
     }
-    url = f"{NETBOX_URL}/api/dcim/interfaces/"
+    url = f"{ENV_VARS["NETBOX_URL"]}/api/dcim/interfaces/"
     response = requests.post(url, headers=netbox_headers, json=data, verify=False)
 
     if response.status_code not in [200, 201]:
